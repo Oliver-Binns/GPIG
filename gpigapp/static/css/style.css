@@ -1,0 +1,46 @@
+nav
+{
+    text-align: center;
+    background-color: #77bdff;
+    border-radius: 10px;
+    opacity: 0.75;
+}
+
+nav ul
+{
+    list-style-type: none;
+    width:100%;
+    display: inline-flex;
+    padding: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+nav ul li
+{
+     width: 100%;
+     position: relative;
+     padding-bottom: 17px;
+     padding-top: 17px;
+     color: white;
+}
+
+
+#panel
+{
+    background-color: aqua;
+    height: 100%;
+    width: 200px;
+    float: left;
+    left: 0;
+}
+
+#panel #top
+{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#earth
+{
+    background-color: coral;
+}

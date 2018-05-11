@@ -5,10 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GPIG</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        var earth = new WE.map('earth');
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(earth);
+      }
+    </script>
 </head>
-    <body>
-        <h1>Todo: Put GPIG application here</h1>
+    <body onload="initialize()">
+        <header>
+            <nav>
+                <ul>
+                    <li>Upload Satellite Image</li>
+                    <li>Upload Flooded Image</li>
+                    <li>Find Buildings</li>
+                    <li>Allocate Resources</li>
+                </ul>
+            </nav>
+        </header>
+        <div id="container">
+                <div id="panel">
+                    <div id="top">Log output here?</div>
+                    <div id="bottom"></div>
+                </div>
+                <div id="earth"></div> 
+        </div>
     </body>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    
 </html>
