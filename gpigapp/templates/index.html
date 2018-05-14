@@ -6,17 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GPIG</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
-    <!-- <script src="http://www.webglearth.com/v2/api.js"></script>
-    <script>
-      function initialize() {
-        var earth = new WE.map('earth');
-        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(earth);
-      }
-    </script> -->
 </head>
-    <!-- <body onload="initialize()"> -->
     <body>
         <header>
             <nav>
@@ -30,8 +20,30 @@
         </header>
         <div id="container">
             <div id="panel">
-                <div id="top">Log output here?</div>
-                <div id="bottom"></div>
+                <div id="layers">
+                    <h2 class="center">Layers</h2>
+                    <!-- Checkbox from https://www.inserthtml.com/2012/06/custom-form-radio-checkbox/ -->
+                    <div>
+                        <div class="tag">Flood Area</div>
+                        <input type="checkbox" id="checkbox-flood-area" class="regular-checkbox" /><label for="checkbox-flood-area"></label>
+                    </div>
+                    <div>
+                        <div class="tag">Affected Buildings</div>
+                        <input type="checkbox" id="checkbox-affected-buildings" class="regular-checkbox" /><label for="checkbox-affected-buildings"></label>
+                    </div>
+                    <div>
+                        <div class="tag">Safe Zones</div>
+                        <input type="checkbox" id="checkbox-safe-zones" class="regular-checkbox" /><label for="checkbox-safe-zones"></label>
+                    </div>
+                </div>
+                <hr />
+                <div id="resources">
+                    <h2>Available Resources</h2>
+                    <h3>Rescue Boats: 1/2</h3>
+                    <h3>Paramedics: 4/15</h3>
+                    <h3>Firefighters: 4/10</h3>
+                    <h3>Safe Zone Capacity Remaining: 35%</h3>
+                </div>
             </div>
             <div id="images">
                 <div id="beforeDiv">
