@@ -2,8 +2,6 @@ nav
 {
     text-align: center;
     background-color: #77bdff;
-    border-radius: 10px;
-    opacity: 0.75;
 }
 
 nav ul
@@ -19,10 +17,29 @@ nav ul
 nav ul li
 {
      width: 100%;
-     position: relative;
-     padding-bottom: 17px;
-     padding-top: 17px;
      color: white;
+     background-color: blue;
+     border-radius: 10px;
+     margin-left: 10px;
+     margin-right: 10px;
+}
+
+nav ul li a
+{
+    padding: 17px;
+    display: block;
+}
+nav ul li:hover
+{
+    background-color: lightblue;
+    color: yellowgreen;
+    cursor: pointer;
+}
+
+nav ul li:active
+{
+    background-color: red;
+    color: purple;
 }
 
 
@@ -30,7 +47,7 @@ nav ul li
 {
     background-color: aqua;
     height: 100%;
-    width: 200px;
+    width: 15%;
     float: left;
     left: 0;
 }
@@ -40,7 +57,10 @@ nav ul li
     font-family: 'Courier New', Courier, monospace;
 }
 
-#earth
+#images
 {
+    position: relative;
+    text-align: center;
     background-color: coral;
+    margin-left: 15%;
 }

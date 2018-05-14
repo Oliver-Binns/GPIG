@@ -1,3 +1,5 @@
 #!flask/bin/python
-from gpigapp import app
-app.run()
+from gpigapp import socketio, app, callbacks
+
+if __name__ == '__main__':
+    socketio.run(app)
