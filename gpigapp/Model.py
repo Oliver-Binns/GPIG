@@ -10,17 +10,17 @@ class Resource:
 
 		
 class Boat(Resource):
-	def __init(self):
+	def __init__(self):
 		pass
 		
 
 class Responder(Resource):
-	def __init(self):
+	def __init__(self):
 		pass
 
 		
 class Paramedic(Resource):
-	def __init(self):
+	def __init__(self):
 		pass
 
 
