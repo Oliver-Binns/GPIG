@@ -8,7 +8,7 @@ import cv2
 def loadBeforeImage(img):
     if img == {}:
         #use Brookshire Harvey image as default
-        with open("data/harvey-brookshire-before.jpg", "rb") as imageFile:
+        with open("data/harvey-wharton-before.jpg", "rb") as imageFile:
             b64img = base64.b64encode(imageFile.read())
             emit("displayBeforeImage", b64img.decode())
     else:
@@ -18,7 +18,7 @@ def loadBeforeImage(img):
 def loadAfterImage(img):
     if img == {}:
         #use Brookshire Harvey image as default
-        with open("data/harvey-brookshire-after.jpg", "rb") as imageFile:
+        with open("data/harvey-wharton-after.jpg", "rb") as imageFile:
             b64img = base64.b64encode(imageFile.read())
             emit("displayAfterImage", b64img.decode())
     else:
