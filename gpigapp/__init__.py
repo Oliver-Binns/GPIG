@@ -6,8 +6,8 @@ app.config["SECRET_KEY"] = "cabbage"
 app.config.from_object("config")
 app.config.from_pyfile("config.py")
 
-import logging
-logging.basicConfig(level=logging.DEBUG,format='[%(asctime)s][%(levelname)s] - %(funcName)s: %(message)s')
+# import logging
+# logging.basicConfig(level=logging.DEBUG,format='[%(asctime)s][%(levelname)s] - %(funcName)s: %(message)s')
 
 socketio = SocketIO(app)
 

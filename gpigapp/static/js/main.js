@@ -10,6 +10,7 @@ socket.on('connect', function()
 socket.on('displayBeforeImage', function(imgStr)
 {
     $("#beforeImage").attr("src", "data:image/jpg;base64,"+imgStr);
+    
 });
 
 socket.on('displayAfterImage', function(imgStr)
@@ -17,15 +18,35 @@ socket.on('displayAfterImage', function(imgStr)
     $("#afterImage").attr("src", "data:image/jpg;base64,"+imgStr);
 });
 
+$( document ).ready(function() {
+
+});
+
+//wait for the image to load before setting the canvas size and attempting to draw
+$("#beforeImage").on('load', function(){
+    $("canvas#main")[0].width = $("#beforeImage").width();
+    $("canvas#main")[0].height = $("#beforeImage").height();
+
+    $("canvas#main").drawArc(
+        {
+            fillStyle: "blue",
+            x: 100,
+            y: 100,
+            radius: 40
+        }
+    );
+  });
+
+
+
 function showBeforeImage()
 {
-    $("#beforeDiv").show();
-    $("#afterDiv").hide();
+    $("#beforeImage").show();
+    $("#afterImage").hide();
 }
 
 function showAfterImage()
 {
-    $("#beforeDiv").hide();
-    $("#afterDiv").show();
+    $("#beforeImage").hide();
+    $("#afterImage").show();
 }
-
