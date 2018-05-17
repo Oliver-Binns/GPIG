@@ -1,3 +1,15 @@
+from abc import ABC
+
+# mje518 I added a class to hold the entire model for the decision making
+class Model:
+	def __init__(self, tasks, resources, affectedPersons, buildings):
+		self.tasks = tasks
+		self.resources = resources
+		self.affectedPersons = affectedPersons
+		self.buildings = buildings
+		self.buildingPriorityList = None
+		
+
 class Task:
 	def __init__(self, resources, locatedAt):
 		self.resources = resources
@@ -5,23 +17,27 @@ class Task:
 
 
 class Resource:
-	def __init__(self):
-		pass
+	def __init__(self, locatedAt):
+		self.locatedAt = locatedAt
+		
 
 		
 class Boat(Resource):
-	def __init__(self):
-		pass
+	def __init__(self, locatedAt):
+		super().__init__(locatedAt)
+		
 		
 
 class Responder(Resource):
-	def __init__(self):
-		pass
+	def __init__(self, locatedAt):
+		super().__init__(locatedAt)
+		
 
 		
 class Paramedic(Resource):
-	def __init__(self):
-		pass
+	def __init__(self, locatedAt):
+		super().__init__(locatedAt)
+		
 
 
 class AffectedPerson:
@@ -33,12 +49,12 @@ class AffectedPerson:
 
 class VulnerablePerson(AffectedPerson):
 	def __init__(self, name, dateOfBirth, priority):
-		super(name, dateOfBirth, priority).__init__() 
+		super().__init__(name, dateOfBirth, priority)
 
 
 class InjuredPerson(AffectedPerson):
-	def __init__(self):
-		super(name, dateOfBirth, priority).__init__() 
+	def __init__(self, name, dateOfBirth, priority):
+		super().__init__(name, dateOfBirth, priority)
 
 
 class Name:
@@ -47,18 +63,21 @@ class Name:
 		self.__lastname = lastname
 
 
-class Building:
-    def __init__(self, location, impacted, estimatedOccupants, vulnerableOccupants):
-        self.location = location
-        self.impacted = impacted
-        self.estimatedOccupants = estimatedOccupants
-		self.vulnerableOccupants = vulnerableOccupants
+class Building(ABC):
+	def __init__(self, location, impacted, estimatedOccupants, affectedOccupants):
+		self.location = location
+		self.impacted = impacted
+		self.estimatedOccupants = estimatedOccupants
+		self.affectedOccupants = affectedOccupants
 
+#We have created another subclass for affected buildings
+class affectedBuilding(Building):
+	def __init__(self, location, impacted, estimatedOccupants, affectedOccupants):
+		super.__init__(location, impacted, estimatedOccupants, affectedOccupants)
 
 class Safehouse(Building):
-	def __init__(self, location, capacity):
-		self.location = location
-		self.estimatedOccupants = 0
+	def __init__(self, location, impacted, capacity):
+		super().__init__(location, impacted, 0, None)
 		self.capacity = capacity
 
 	def getRemainingCapacity(self):
