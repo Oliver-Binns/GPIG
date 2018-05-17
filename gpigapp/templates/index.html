@@ -23,9 +23,11 @@
                     <!-- Checkbox from https://www.inserthtml.com/2012/06/custom-form-radio-checkbox/ -->
                     <div class="tag">Satellite Image</div>
                     <div class="button-holder">
-                        <input type="radio" id="radio-before" name="radio-flood-set" class="regular-radio" checked="checked" onclick="showBeforeImage();"/><label for="radio-before">Before Flood</label>
+                        <input type="radio" id="radio-before" name="radio-image-set" class="regular-radio" checked="checked" onclick="showBeforeImage();"/><label for="radio-before">Before Flood</label>
                         <br />
-                        <input type="radio" id="radio-after" name="radio-flood-set" class="regular-radio" onclick="showAfterImage();" /><label for="radio-after">After Flood</label>
+                        <input type="radio" id="radio-after" name="radio-image-set" class="regular-radio" onclick="showAfterImage();" /><label for="radio-after">After Flood</label>
+                        <br />
+                        <input type="radio" id="radio-map" name="radio-image-set" class="regular-radio" onclick="showMapImage();" /><label for="radio-map">Map View</label>
                     </div>
                     <br />
                     <div class="tag">Data</div>
@@ -52,6 +54,7 @@
                 <canvas id="main"></canvas>
                 <img class="layer" id="beforeImage" />
                 <img class="layer" id="afterImage" style="display: none;" />
+                <img class="layer" id="mapImage" style="display: none;" />
             </div>
         </div>
     </body>
