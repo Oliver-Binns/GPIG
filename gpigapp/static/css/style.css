@@ -82,7 +82,8 @@ nav ul li:active
 
 .layer
 {
-	width: 100%;
+    width: 100%;
+    z-index: 50;
 }
 
 canvas#main
