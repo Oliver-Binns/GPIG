@@ -2,16 +2,19 @@ class Task:
 	def __init__(self, resources, locatedAt):
 		self.resources = resources
 		self.locatedAt = locatedAt
+		self.percentComplete = 0
+
+	def calculatePriority()
+		pass
 
 
 class Resource:
-	def __init__(self):
-		pass
-
+	def __init__(self, location):
+		self.location = location
 		
 class Boat(Resource):
-	def __init__(self):
-		pass
+	def __init__(self, capacity):
+		self.capacity = capacity
 		
 
 class Responder(Resource):
@@ -48,9 +51,9 @@ class Name:
 
 
 class Building:
-    def __init__(self, location, impacted, estimatedOccupants, vulnerableOccupants):
+    def __init__(self, location, isImpacted, estimatedOccupants, vulnerableOccupants):
         self.location = location
-        self.impacted = impacted
+        self.isImpacted = isImpacted
         self.estimatedOccupants = estimatedOccupants
 		self.vulnerableOccupants = vulnerableOccupants
 
