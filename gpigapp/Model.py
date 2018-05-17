@@ -16,7 +16,7 @@ class Task:
 		self.locatedAt = locatedAt
 		self.percentComplete = 0
 
-	def calculatePriority()
+	def calculatePriority():
 		pass
 
 class Resource:

@@ -1,31 +1,25 @@
-import Model as modelLib
-import Decide as decideLib
-from gpigapp import socketio
+from gpigapp import Model as modelLib#, Decide as decideLib
+from flask_socketio import emit
+import json
 
 class Ooda():
     def __init__(self):
         self.model = modelLib.Model(None, None, None, None)
         self.loop = False
 
-    @socketio.on("observe")
     def observe(self):
         # Fetch data
         pass
 
-    @socketio.on("orient")
     def orient(self):
         pass
 
-    @socketio.on("decide")
     def decide(self):
         pass
     
-    @socketio.on("act")
     def act(self):
-        #push tasks to front end
-        pass
+        return self.model.tasks
 
-    @socketio.on("loopStart")
     def oodaLoop(self):
         self.loop = True
 
@@ -36,13 +30,5 @@ class Ooda():
             self.act()
             # update sim/model
 
-    @socketio.on("loopStop")
     def oodaLoopStop(self):
         self.loop = False
-
-
-
-
-
-
-ooda = Ooda()
