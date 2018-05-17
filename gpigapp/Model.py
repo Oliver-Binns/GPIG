@@ -11,9 +11,9 @@ class Model:
 		
 
 class Task:
-	def __init__(self, resources, locatedAt):
+	def __init__(self, resources, destinations):
 		self.resources = resources
-		self.locatedAt = locatedAt
+		self.destinations = destinations # List of destinations for the task
 		self.percentComplete = 0
 
 	def calculatePriority()
@@ -76,6 +76,7 @@ class Building(ABC):
 class affectedBuilding(Building):
 	def __init__(self, location, isImpacted, estimatedOccupants, affectedOccupants):
 		super.__init__(location, isImpacted, estimatedOccupants, affectedOccupants)
+		self.isServiced = False
 
 class Safehouse(Building):
 	def __init__(self, location, isImpacted, capacity):
