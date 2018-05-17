@@ -24,6 +24,11 @@ socket.on('displayMapImage', function(imgStr)
     $("#mapImage").attr("src", "data:image/jpg;base64,"+imgStr);
 });
 
+socket.on("updateTaskList", function(taskList)
+{
+    console.log("new task list: " + taskList)
+});
+
 
 $( document ).ready(function() {
 

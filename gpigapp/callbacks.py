@@ -1,8 +1,9 @@
-from gpigapp import socketio
+from gpigapp import socketio, ooda
 from flask_socketio import emit
 import base64
 import numpy
 import cv2
+import json
 
 @socketio.on("loadBeforeImage")
 def loadBeforeImage(img):
@@ -33,3 +34,8 @@ def loadAfterImage(img):
             emit("displayMapImage", b64img.decode())
     else:
         print("TODO: store image on server, then update client with displayMapImage")
+
+
+@socketio.on("act")
+def act():
+    socketio.emit("updateTaskList", json.dumps(ooda.act()))

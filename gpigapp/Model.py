@@ -16,7 +16,7 @@ class Task:
 		self.destinations = destinations # List of destinations for the task
 		self.percentComplete = 0
 
-	def calculatePriority()
+	def calculatePriority():
 		pass
 
 class Resource:
