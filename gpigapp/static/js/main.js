@@ -74,9 +74,9 @@ $( document ).ready(function() {
         $("canvas#main").drawLayers();
     });
 
-    $("canvas#main").addLayer({name: FLOOD_LAYER, fillStyle: "rgba(41, 148, 219, 0.6)", type:"rectangle", x: 100, y: 100, width: 200, height: 250})
-        .addLayer({name: BUILDINGS_LAYER, fillStyle: "rgba(221, 17, 17, 0.6)", type:"rectangle", x: 300, y: 300, width: 200, height: 250})
-        .addLayer({name: SAFEZONES_LAYER, fillStyle: "rgba(5, 178, 14, 0.6)", type:"rectangle", x: 500, y: 500, width: 200, height: 250}).drawLayers();
+    $("canvas#main").addLayer({name: FLOOD_LAYER, fillStyle: "rgba(41, 148, 219, 0.5)", type:"rectangle", x: 100, y: 100, width: 200, height: 250})
+        .addLayer({name: BUILDINGS_LAYER, fillStyle: "rgba(221, 17, 17, 0.5)", type:"rectangle", x: 300, y: 300, width: 200, height: 250})
+        .addLayer({name: SAFEZONES_LAYER, fillStyle: "rgba(5, 178, 14, 0.5)", type:"rectangle", x: 500, y: 500, width: 200, height: 250}).drawLayers();
 });
 
 //wait for the image to load before setting the canvas size and attempting to draw
