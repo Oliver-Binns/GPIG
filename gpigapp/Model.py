@@ -17,19 +17,37 @@ class Model:
 		return Model([], [item for sublist in Data.getResources() for item in sublist], affectedPeople, buildings + Data.getSafeHouses())
 
 	def getFrontendModel(self):
-		"""splits things up to make it easier to display the model on the frontend"""
+		"""Splits things up to make it easier to display the model on the frontend
+		This is horrible and you probably shouldn't read it... but it made my life easier"""
 		class FrontModel(Model):
-			def __init__(self):
-				super().__init__(None, None, None, None)
-				self.safehouses = None
-				self.affectedBuildings = None
-		ret = FrontModel()
-		ret.tasks = self.tasks
-		ret.resources = self.resources
-		ret.affectedPersons = self.affectedPersons
-		ret.safehouses = [sh for sh in self.buildings if isinstance(sh, Safehouse)]
-		ret.affectedBuildings = [ab for ab in self.buildings if isinstance(ab, AffectedBuilding)]
-		return ret
+			def __init__(self, m):
+				super().__init__(m.tasks, m.resources, m.affectedPersons, m.buildings)
+				self.safehouses = []
+				self.affectedBuildings = []
+
+				for b in m.buildings:
+					if isinstance(b, Safehouse):
+						self.safehouses.append(b)
+					elif isinstance(b, AffectedBuilding):
+						self.affectedBuildings.append(b)
+					else:
+						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
+
+				self.boats = []
+				self.responders = []
+				self.paramedics = []
+
+				for r in m.resources:
+					if isinstance(r, Boat):
+						self.boats.append(r)
+					elif isinstance(r, Responder):
+						self.responders.append(r)
+					elif isinstance(r, Paramedic):
+						self.paramedics.append(r)
+					else:
+						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
+
+		return FrontModel(self)
 
 class Task:
 	def __init__(self, resources, destinations):

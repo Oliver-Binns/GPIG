@@ -1,8 +1,11 @@
 var FLOOD_LAYER = "floodLayer";
 var BUILDINGS_LAYER = "affectedBuildingsLayer";
 var SAFEZONES_LAYER =  "safezonesLayer";
+var RESOURCES_LAYER =  "resourcesLayer";
+var PEOPLE_LAYER =  "peopleLayer";
 
 var BUILDING_SIZE = 35;
+var RESOURCE_SIZE = 15;
 
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 socket.on('connect', function()
@@ -39,16 +42,13 @@ socket.on("updateModel", function(model)
     //update task list (needs to be implemented on the UI first)
     //update resource readout
     //update resource locations on map
-    //update building locations on map
     //update affected persons on map
 
     var model = $.parseJSON(model);
     $("canvas#main").removeLayers();
 
     for (var idx in model["affectedBuildings"])
-    {
-        console.log(model["affectedBuildings"][idx]["location"]["_Location__longitude"],model["affectedBuildings"][idx]["location"]["_Location__latitude"]);
-        
+    {        
         $("canvas#main").drawEllipse(
         {
             layer: true, fillStyle: "rgba(221, 17, 17, 0.5)",
@@ -66,6 +66,39 @@ socket.on("updateModel", function(model)
                 x: model["safehouses"][idx]["location"]["_Location__longitude"],
                 y: model["safehouses"][idx]["location"]["_Location__latitude"],
                 width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
+            });
+    }
+
+    for (var idx in model["boats"])
+    {
+        $("canvas#main").drawRect(
+            {
+                layer: true, fillStyle: "blue",
+                x: model["boats"][idx]["location"]["_Location__longitude"],
+                y: model["boats"][idx]["location"]["_Location__latitude"],
+                width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
+            });
+    }
+
+    for (var idx in model["paramedics"])
+    {
+        $("canvas#main").drawRect(
+            {
+                layer: true, fillStyle: "rgba(158, 56, 255, 0.5)",
+                x: model["paramedics"][idx]["location"]["_Location__longitude"],
+                y: model["paramedics"][idx]["location"]["_Location__latitude"],
+                width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
+            });
+    }
+
+    for (var idx in model["responders"])
+    {
+        $("canvas#main").drawPolygon(
+            {
+                layer: true, fillStyle: "rbga(255,255,0,0.5)", sides: 3,
+                x: model["responders"][idx]["location"]["_Location__longitude"],
+                y: model["responders"][idx]["location"]["_Location__latitude"],
+                radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
             });
     }
 });
@@ -122,6 +155,44 @@ $( document ).ready(function() {
         else
         {
             $("canvas#main").setLayerGroup(SAFEZONES_LAYER,
+                {
+                    visible: false
+                });
+        }
+        $("canvas#main").drawLayers();
+    });
+
+    $("#checkbox-resources").change(function()
+    {
+        if(this.checked)
+        {
+            $("canvas#main").setLayerGroup(RESOURCES_LAYER,
+                {
+                    visible: true
+                });
+        }
+        else
+        {
+            $("canvas#main").setLayerGroup(RESOURCES_LAYER,
+                {
+                    visible: false
+                });
+        }
+        $("canvas#main").drawLayers();
+    });
+
+    $("#checkbox-people").change(function()
+    {
+        if(this.checked)
+        {
+            $("canvas#main").setLayerGroup(PEOPLE_LAYER,
+                {
+                    visible: true
+                });
+        }
+        else
+        {
+            $("canvas#main").setLayerGroup(PEOPLE_LAYER,
                 {
                     visible: false
                 });
