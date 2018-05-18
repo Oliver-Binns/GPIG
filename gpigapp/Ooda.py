@@ -22,7 +22,7 @@ class Ooda():
         decideLib.decide(self.model)
     
     def act(self):
-        return self.model
+        return self.model.getFrontendModel()
 
     def oodaLoop(self):
         self.loop = True

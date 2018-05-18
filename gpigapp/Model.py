@@ -16,6 +16,21 @@ class Model:
 		affectedPeople = [b.affectedOccupants for b in buildings if len(b.affectedOccupants)]
 		return Model([], [item for sublist in Data.getResources() for item in sublist], affectedPeople, buildings + Data.getSafeHouses())
 
+	def getFrontendModel(self):
+		"""splits things up to make it easier to display the model on the frontend"""
+		class FrontModel(Model):
+			def __init__(self):
+				super().__init__(None, None, None, None)
+				self.safehouses = None
+				self.affectedBuildings = None
+		ret = FrontModel()
+		ret.tasks = self.tasks
+		ret.resources = self.resources
+		ret.affectedPersons = self.affectedPersons
+		ret.safehouses = [sh for sh in self.buildings if isinstance(sh, Safehouse)]
+		ret.affectedBuildings = [ab for ab in self.buildings if isinstance(ab, AffectedBuilding)]
+		return ret
+
 class Task:
 	def __init__(self, resources, destinations):
 		self.resources = resources

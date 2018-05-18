@@ -2,6 +2,8 @@ var FLOOD_LAYER = "floodLayer";
 var BUILDINGS_LAYER = "affectedBuildingsLayer";
 var SAFEZONES_LAYER =  "safezonesLayer";
 
+var BUILDING_SIZE = 35;
+
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 socket.on('connect', function()
 {
@@ -10,6 +12,8 @@ socket.on('connect', function()
     socket.emit("loadBeforeImage", {});
     socket.emit("loadAfterImage", {});
     socket.emit("loadMapImage", {});
+
+    socket.emit("decide"); socket.emit("act");
 });
 
 socket.on('displayBeforeImage', function(imgStr)
@@ -30,7 +34,40 @@ socket.on('displayMapImage', function(imgStr)
 
 socket.on("updateModel", function(model)
 {
-    
+    console.log("Update model...");
+    //TODO
+    //update task list (needs to be implemented on the UI first)
+    //update resource readout
+    //update resource locations on map
+    //update building locations on map
+    //update affected persons on map
+
+    var model = $.parseJSON(model);
+    $("canvas#main").removeLayers();
+
+    for (var idx in model["affectedBuildings"])
+    {
+        console.log(model["affectedBuildings"][idx]["location"]["_Location__longitude"],model["affectedBuildings"][idx]["location"]["_Location__latitude"]);
+        
+        $("canvas#main").drawEllipse(
+        {
+            layer: true, fillStyle: "rgba(221, 17, 17, 0.5)",
+            x: model["affectedBuildings"][idx]["location"]["_Location__longitude"],
+            y: model["affectedBuildings"][idx]["location"]["_Location__latitude"],
+            width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [BUILDINGS_LAYER]
+        });
+    }
+
+    for (var idx in model["safehouses"])
+    {
+        $("canvas#main").drawEllipse(
+            {
+                layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
+                x: model["safehouses"][idx]["location"]["_Location__longitude"],
+                y: model["safehouses"][idx]["location"]["_Location__latitude"],
+                width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
+            });
+    }
 });
 
 
@@ -39,11 +76,17 @@ $( document ).ready(function() {
     {
         if(this.checked)
         {
-            $("canvas#main").getLayer(FLOOD_LAYER).visible = true;
+            $("canvas#main").setLayerGroup(FLOOD_LAYER,
+                {
+                    visible: true
+                });
         }
         else
         {
-            $("canvas#main").getLayer(FLOOD_LAYER).visible = false;
+            $("canvas#main").setLayerGroup(FLOOD_LAYER,
+                {
+                    visible: false
+                });
         }
         $("canvas#main").drawLayers();
     });
@@ -52,11 +95,17 @@ $( document ).ready(function() {
     {
         if(this.checked)
         {
-            $("canvas#main").getLayer(BUILDINGS_LAYER).visible = true;
+            $("canvas#main").setLayerGroup(BUILDINGS_LAYER,
+                {
+                    visible: true
+                });
         }
         else
         {
-            $("canvas#main").getLayer(BUILDINGS_LAYER).visible = false;
+            $("canvas#main").setLayerGroup(BUILDINGS_LAYER,
+                {
+                    visible: false
+                });
         }
         $("canvas#main").drawLayers();
     });
@@ -65,18 +114,22 @@ $( document ).ready(function() {
     {
         if(this.checked)
         {
-            $("canvas#main").getLayer(SAFEZONES_LAYER).visible = true;
+            $("canvas#main").setLayerGroup(SAFEZONES_LAYER,
+                {
+                    visible: true
+                });
         }
         else
         {
-            $("canvas#main").getLayer(SAFEZONES_LAYER).visible = false;
+            $("canvas#main").setLayerGroup(SAFEZONES_LAYER,
+                {
+                    visible: false
+                });
         }
         $("canvas#main").drawLayers();
     });
 
-    $("canvas#main").addLayer({name: FLOOD_LAYER, fillStyle: "rgba(41, 148, 219, 0.5)", type:"rectangle", x: 100, y: 100, width: 200, height: 250})
-        .addLayer({name: BUILDINGS_LAYER, fillStyle: "rgba(221, 17, 17, 0.5)", type:"rectangle", x: 300, y: 300, width: 200, height: 250})
-        .addLayer({name: SAFEZONES_LAYER, fillStyle: "rgba(5, 178, 14, 0.5)", type:"rectangle", x: 500, y: 500, width: 200, height: 250}).drawLayers();
+    $("canvas#main").addLayer({name: FLOOD_LAYER, fillStyle: "rgba(41, 148, 219, 0.5)", type:"rectangle", x: 100, y: 100, width: 200, height: 250}).drawLayers();
 });
 
 //wait for the image to load before setting the canvas size and attempting to draw
