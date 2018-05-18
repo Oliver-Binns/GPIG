@@ -12,9 +12,7 @@ class Model:
 		
 	@staticmethod
 	def loadFakeModel():
-		buildings = Data.getBuildings()
-		affectedPeople = [b.affectedOccupants for b in buildings if len(b.affectedOccupants)]
-		return Model([], [item for sublist in Data.getResources() for item in sublist], affectedPeople, buildings + Data.getSafeHouses())
+		return Data.getPopulatedModel()
 
 	def getFrontendModel(self):
 		"""splits things up to make it easier to display the model on the frontend"""
