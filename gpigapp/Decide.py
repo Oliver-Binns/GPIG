@@ -67,8 +67,8 @@ def createTask(building, resources, closestSafehouse):
     while(totalBoatCapacity < building.estimatedOccupants):
         nextBoat = next((boat for boat in resourcesIterator if isinstance(boat, modelLib.Boat)), None)
         if(nextBoat is not None):
-            totalBoatCapacity += boat.capacity
-            assignedResources.add(boat)
+            totalBoatCapacity += nextBoat.capacity
+            assignedResources.append(nextBoat)
         else:
             return None
 
@@ -76,11 +76,11 @@ def createTask(building, resources, closestSafehouse):
     for affOcc in building.affectedOccupants:
         nextParamedic = next((paramedic for paramedic in resourcesIterator if isinstance(paramedic, modelLib.Paramedic)), None)
         if(nextParamedic is not None):
-            assignedResources.add(nextParamedic)
+            assignedResources.append(nextParamedic)
         else:
             return None
 
-    return Task(assignedResources, [building, closestSafehouse])
+    return modelLib.Task(assignedResources, [building, closestSafehouse])
 
 
 
