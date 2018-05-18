@@ -1,8 +1,8 @@
-import Model as modelLib
+from gpigapp import Model as modelLib
 
 def decide(Model):
     safeHouses = [safehouse for safehouse in Model.buildings if isinstance(safehouse, modelLib.Safehouse)]
-    affectedBuildings = [affectedBuilding for affectedBuilding in Model.buildings if isinstance(affectedBuilding, modelLib.affectedBuilding)]
+    affectedBuildings = [affectedBuilding for affectedBuilding in Model.buildings if isinstance(affectedBuilding, modelLib.AffectedBuilding)]
 
     #Adding any unserviced buildings to the building priority list with their calculated priority
     for building in affectedBuildings:

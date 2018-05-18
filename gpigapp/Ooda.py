@@ -5,7 +5,9 @@ import json
 
 class Ooda():
     def __init__(self):
-        self.model = modelLib.Model(None, None, None, None)
+        self.model = modelLib.Model.loadFakeModel()
+        import code
+        code.interact(local=locals())
         self.loop = False
 
     def observe(self):

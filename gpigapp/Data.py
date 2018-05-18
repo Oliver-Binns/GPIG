@@ -1,11 +1,11 @@
-import Model 
+from gpigapp import Model 
 import csv
 
 # Paths to our fictional DBs
-resourcesPath = "../data/mock_db/resources.csv"
-buildingsPath = "../data/mock_db/affectedBuildings.csv"
-safeHousesPath = "../data/mock_db/safeHouses.csv"
-peoplePath = "../data/mock_db/people.csv"
+resourcesPath = "data/mock_db/resources.csv"
+buildingsPath = "data/mock_db/affectedBuildings.csv"
+safeHousesPath = "data/mock_db/safeHouses.csv"
+peoplePath = "data/mock_db/people.csv"
 
 def getResources():
     """
@@ -99,6 +99,6 @@ def getBuildings():
             else:
                 affectedOccupants = []
 
-            buildings.append( Model.affectedBuilding(location, impacted, estimatedOccupants, affectedOccupants))
+            buildings.append( Model.AffectedBuilding(location, impacted, estimatedOccupants, affectedOccupants))
 
     return buildings

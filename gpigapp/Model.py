@@ -1,4 +1,5 @@
 from abc import ABC
+from gpigapp import Data
 
 # mje518 I added a class to hold the entire model for the decision making
 class Model:
@@ -9,6 +10,11 @@ class Model:
 		self.buildings = buildings
 		self.buildingPriorityList = []
 		
+	@staticmethod
+	def loadFakeModel():
+		buildings = Data.getBuildings()
+		affectedPeople = [b.affectedOccupants for b in buildings if len(b.affectedOccupants)]
+		return Model([], Data.getResources(), affectedPeople, buildings)
 
 class Task:
 	def __init__(self, resources, destinations):
@@ -79,7 +85,7 @@ class Building(ABC):
 		self.affectedOccupants = affectedOccupants
 
 #We have created another subclass for affected buildings
-class affectedBuilding(Building):
+class AffectedBuilding(Building):
 	def __init__(self, location, isImpacted, estimatedOccupants, affectedOccupants):
 		super().__init__(location, isImpacted, estimatedOccupants, affectedOccupants)
 		self.isServiced = False
