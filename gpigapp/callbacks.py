@@ -3,7 +3,7 @@ from flask_socketio import emit
 import base64
 import numpy
 import cv2
-import json
+import jsonpickle
 
 @socketio.on("loadBeforeImage")
 def loadBeforeImage(img):
@@ -36,6 +36,10 @@ def loadAfterImage(img):
         print("TODO: store image on server, then update client with displayMapImage")
 
 
+@socketio.on("decide")
+def decide():
+    ooda.decide()
+
 @socketio.on("act")
 def act():
-    socketio.emit("updateTaskList", json.dumps(ooda.act()))
+    socketio.emit("updateModel", jsonpickle.encode(ooda.act()))

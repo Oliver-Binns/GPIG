@@ -19,7 +19,7 @@ class Ooda():
         decideLib.decide(self.model)
     
     def act(self):
-        return self.model.tasks
+        return self.model
 
     def oodaLoop(self):
         self.loop = True

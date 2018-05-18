@@ -28,9 +28,9 @@ socket.on('displayMapImage', function(imgStr)
     $("#mapImage").attr("src", "data:image/jpg;base64,"+imgStr);
 });
 
-socket.on("updateTaskList", function(taskList)
+socket.on("updateModel", function(model)
 {
-    console.log("new task list: " + taskList)
+    console.log("new model: " + model)
 });
 
 

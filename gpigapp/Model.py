@@ -14,7 +14,7 @@ class Model:
 	def loadFakeModel():
 		buildings = Data.getBuildings()
 		affectedPeople = [b.affectedOccupants for b in buildings if len(b.affectedOccupants)]
-		return Model([], Data.getResources(), affectedPeople, buildings)
+		return Model([], [item for sublist in Data.getResources() for item in sublist], affectedPeople, buildings + Data.getSafeHouses())
 
 class Task:
 	def __init__(self, resources, destinations):
