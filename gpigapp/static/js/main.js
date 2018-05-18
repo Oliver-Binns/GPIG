@@ -35,6 +35,22 @@ socket.on('displayMapImage', function(imgStr)
     $("#mapImage").attr("src", "data:image/jpg;base64,"+imgStr);
 });
 
+function scaleX(x)
+{
+    var ORIGX = 1240;
+    var sX = $("#beforeImage").width()/ORIGX;
+    console.log(x*sX);
+    return x*sX;
+}
+
+function scaleY(y)
+{
+    var ORIGY = 697;
+    var sY = $("#beforeImage").height()/ORIGY;
+    console.log(y*sY)
+    return y*sY;
+}
+
 socket.on("updateModel", function(model)
 {
     console.log("Update model...");
@@ -52,8 +68,8 @@ socket.on("updateModel", function(model)
         $("canvas#main").drawEllipse(
         {
             layer: true, fillStyle: "rgba(221, 17, 17, 0.5)",
-            x: model["affectedBuildings"][idx]["location"]["_Location__longitude"],
-            y: model["affectedBuildings"][idx]["location"]["_Location__latitude"],
+            x: scaleX(model["affectedBuildings"][idx]["location"]["_Location__longitude"]),
+            y: scaleY(model["affectedBuildings"][idx]["location"]["_Location__latitude"]),
             width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [BUILDINGS_LAYER]
         });
     }
@@ -63,8 +79,8 @@ socket.on("updateModel", function(model)
         $("canvas#main").drawEllipse(
             {
                 layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
-                x: model["safehouses"][idx]["location"]["_Location__longitude"],
-                y: model["safehouses"][idx]["location"]["_Location__latitude"],
+                x: scaleX(model["safehouses"][idx]["location"]["_Location__longitude"]),
+                y: scaleY(model["safehouses"][idx]["location"]["_Location__latitude"]),
                 width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
             });
     }
@@ -74,8 +90,8 @@ socket.on("updateModel", function(model)
         $("canvas#main").drawRect(
             {
                 layer: true, fillStyle: "blue",
-                x: model["boats"][idx]["location"]["_Location__longitude"],
-                y: model["boats"][idx]["location"]["_Location__latitude"],
+                x: scaleX(model["boats"][idx]["location"]["_Location__longitude"]),
+                y: scaleY(model["boats"][idx]["location"]["_Location__latitude"]),
                 width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
             });
     }
@@ -85,8 +101,8 @@ socket.on("updateModel", function(model)
         $("canvas#main").drawRect(
             {
                 layer: true, fillStyle: "rgba(158, 56, 255, 0.5)",
-                x: model["paramedics"][idx]["location"]["_Location__longitude"],
-                y: model["paramedics"][idx]["location"]["_Location__latitude"],
+                x: scaleX(model["paramedics"][idx]["location"]["_Location__longitude"]),
+                y: scaleY(model["paramedics"][idx]["location"]["_Location__latitude"]),
                 width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
             });
     }
@@ -96,8 +112,8 @@ socket.on("updateModel", function(model)
         $("canvas#main").drawPolygon(
             {
                 layer: true, fillStyle: "rbga(255,255,0,0.5)", sides: 3,
-                x: model["responders"][idx]["location"]["_Location__longitude"],
-                y: model["responders"][idx]["location"]["_Location__latitude"],
+                x: scaleX(model["responders"][idx]["location"]["_Location__longitude"]),
+                y: scaleY(model["responders"][idx]["location"]["_Location__latitude"]),
                 radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
             });
     }
