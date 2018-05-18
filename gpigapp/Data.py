@@ -1,4 +1,4 @@
-from gpigapp import Model 
+from gpigapp import Model
 import csv
 
 # Paths to our fictional DBs
@@ -9,30 +9,29 @@ peoplePath = "data/mock_db/people.csv"
 
 def getResources():
     """
-    Returns a list of lists of resources [Boats, Responders, Paramedics]
+    Returns a list of resources.
     """
-    boats = []
-    paramedics = []
-    responders = []
-    with open(resourcesPath, 'r') as res:
-        resources = csv.reader(res, dialect='excel')
+    resources = []
+    
+    with open(resourcesPath, 'r') as re:
+        res = csv.reader(re, dialect='excel')
         
         # Skip header row
-        next(resources)
+        next(res)
         
-        for row in resources:
+        for row in res:
             location = Model.Location(float(row[1]), float(row[2])) 
             
             if row[3] == "Boat":
-                boats.append( Model.Boat(location, int(row[4])) )
+                resources.append( Model.Boat(location, int(row[4])) )
                 continue
             if row[3] == "Responder":
-                responders.append( Model.Responder(location) )
+                resources.append( Model.Responder(location) )
                 continue
             if row[3] == "Paramedic":
-                paramedics.append( Model.Paramedic(location) )
+                resources.append( Model.Paramedic(location) )
 
-    return [boats, responders, paramedics]
+    return resources
 
 def getSafeHouses():
     """
@@ -59,26 +58,8 @@ def getBuildings():
     """
     Returns a list of possibly affected buildings
     """
-    affected = {}
+    affected = getAffectedPersons()
     buildings = []
-
-    with open(peoplePath, 'r') as pep:
-        people = csv.reader(pep, dialect='excel')
-        next(people)
-
-        for row in people:
-            name = Model.Name(row[3], row[4])
-            dob = row[5]
-            priority = int(row[7])
-            if row[6] == "Affected":
-                affected[int(row[0])] = Model.AffectedPerson(name, dob, priority)
-                continue
-            if row[6] == "Vulnerable":
-                affected[int(row[0])] = Model.VulnerablePerson(name, dob, priority)
-                continue
-            if row[6] == "Injured":
-                affected[int(row[0])] = Model.InjuredPerson(name, dob, priority)
-                continue
 
     with open(buildingsPath, 'r') as ab:
         affectedBuildings = csv.reader(ab, dialect='excel')
@@ -102,3 +83,37 @@ def getBuildings():
             buildings.append( Model.AffectedBuilding(location, impacted, estimatedOccupants, affectedOccupants))
 
     return buildings
+
+def getAffectedPersons():
+    """
+    Returns a dict of affected people (a dict to be able to mathc them with buildings)
+    """
+    affected = {}
+
+    with open(peoplePath, 'r') as pep:
+        people = csv.reader(pep, dialect='excel')
+        next(people)
+
+        for row in people:
+            name = Model.Name(row[3], row[4])
+            dob = row[5]
+            priority = int(row[7])
+            if row[6] == "Affected":
+                affected[int(row[0])] = Model.AffectedPerson(name, dob, priority)
+                continue
+            if row[6] == "Vulnerable":
+                affected[int(row[0])] = Model.VulnerablePerson(name, dob, priority)
+                continue
+            if row[6] == "Injured":
+                affected[int(row[0])] = Model.InjuredPerson(name, dob, priority)
+                continue
+
+    return affected
+
+def getPopulatedModel():
+    tasks = []
+    resources = getResources()
+    affectedPersons = getAffectedPersons()
+    buildings = getBuildings() + getSafeHouses() 
+
+    return Model.Model( tasks, resources, affectedPersons, buildings )
