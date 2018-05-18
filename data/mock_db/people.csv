@@ -1,0 +1,22 @@
+﻿ID,Lat,Long,FirstName,LastName,DOB,Type,Priority
+1,713,416,Jack,Smith,1/12/1984,Affected,2
+2,713,416,John,Edwards,5/5/1998,Affected,3
+3,806,102,Samantha,Rogers,12/3/1975,Affected,2
+4,806,102,Michael,Split,29/02/1972,Affected,1
+5,929,60,Boris,Dragunov,9/3/1965,Affected,4
+6,674,149,Jessica,Jones,25/10/1983,Affected,2
+7,684,342,Beyonce,Knowles-Carter,4/10/1981,Affected,1
+8,696,202,Louise,Richards,7/6/1971,Affected,1
+9,488,541,Betty,Sharp,30/5/1953,Affected,2
+10,929,60,Eckleton,Richards,9/8/1960,Vulnerable,5
+11,696,202,Barry,Lightfoot,7/11/1993,Vulnerable,6
+12,488,541,Stuart,Dingleberry,23/1/1949,Vulnerable,5
+13,428,624,Prianka,Dillon,22/7/1981,Vulnerable,4
+14,684,342,Maria,James,19/10/1986,Vulnerable,5
+15,650,195,Andrew,Jones,8/1/1984,Vulnerable,5
+16,792,591,Mohamed,Nasheed,9/9/1952,Vulnerable,6
+17,650,195,Ming ,Xi,7/8/1964,Vulnerable,4
+18,625,63,Ash ,Ketchum,7/3/1969,Injured,9
+19,696,202,Luke,Skywalker,6/9/1958,Injured,10
+20,684,342,Thanos,Titan,6/5/1955,Injured,8
+21,678,260,Naruto,Uzumaki,3/12/1987,Injured,7

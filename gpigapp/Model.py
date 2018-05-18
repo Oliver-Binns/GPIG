@@ -75,7 +75,7 @@ class Building(ABC):
 #We have created another subclass for affected buildings
 class affectedBuilding(Building):
 	def __init__(self, location, isImpacted, estimatedOccupants, affectedOccupants):
-		super.__init__(location, isImpacted, estimatedOccupants, affectedOccupants)
+		super().__init__(location, isImpacted, estimatedOccupants, affectedOccupants)
 		self.isServiced = False
 
 class Safehouse(Building):
