@@ -1,13 +1,14 @@
 import Model as modelLib
 
 def decide(Model):
-    safeHouses = [safehouse for safehouse in Model.building if isinstance(safehouse, modelLib.Safehouse)]
+    safeHouses = [safehouse for safehouse in Model.buildings if isinstance(safehouse, modelLib.Safehouse)]
+    affectedBuildings = [affectedBuilding for affectedBuilding in Model.buildings if isinstance(affectedBuilding, modelLib.affectedBuilding)]
 
     #Adding any unserviced buildings to the building priority list with their calculated priority
-    for building in Model.buildings:
-        if(building.serviced == False and not any(building in subList for subList in Model.buildingPriorityList)):
+    for building in affectedBuildings:
+        if(building.isServiced == False and not any(building in subList for subList in Model.buildingPriorityList)):
             priority = calcPriority(building, safeHouses)
-            Model.buildingPriorityList.add((priority, building))
+            Model.buildingPriorityList.append((priority, building))
 
     #Sort the list into priority order (bigger number is higher priority)
     Model.buildingPriorityList = sorted(Model.buildingPriorityList,reverse=True, key=lambda tup: tup[0])
@@ -16,11 +17,11 @@ def decide(Model):
     bpListIndex = 0
     #keep creating task and assigning them resources until there are not enough resources for the next task
     while(keepAssigning):
-        task = createTask(Model.building[bpListIndex], Model.resources, getClosestSafeHouse(Model.building[bpListIndex], safeHouses)[0])
+        task = createTask(Model.buildings[bpListIndex], Model.resources, getClosestSafehouse(Model.buildings[bpListIndex], safeHouses)[0])
         if(task is not None):
             for resource in task.resources:
                 Model.resources.remove(resource)
-            Model.tasks.add(task)
+            Model.tasks.append(task)
             bpListIndex += 1
         else:
             keepAssigning = False
@@ -32,7 +33,7 @@ def decide(Model):
 def calcPriority(building, safehouses):
     priority = 0
     
-    for(occupant in building.affectedOccupants):
+    for occupant in building.affectedOccupants:
         priority += occupant.priority
 
     priority += building.estimatedOccupants
@@ -46,14 +47,14 @@ def calcPriority(building, safehouses):
 #Used for calculating a building priority
 #Returns a tuple of a safehouse and the distance
 def getClosestSafehouse(building, safehouses):
-    locBuild = building.locatedAt
+    locBuild = building.location.get()
     minDist = -1
-    for(safehouse in safehouses):
-        locSafe = safeHouse.locatedAt
+    for safehouse in safehouses:
+        locSafe = safehouse.location.get()
         dist = ((locBuild[0] - locSafe[0])**2 + (locBuild[1] - locSafe[1])**2)**0.5
         if(dist < minDist or minDist == -1):
             minDist = dist
-            bestSafe = safeHouse
+            bestSafe = safehouse
     return (bestSafe, minDist)
 
 

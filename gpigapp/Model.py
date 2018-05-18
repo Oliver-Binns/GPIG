@@ -7,7 +7,7 @@ class Model:
 		self.resources = resources
 		self.affectedPersons = affectedPersons
 		self.buildings = buildings
-		self.buildingPriorityList = None
+		self.buildingPriorityList = []
 		
 
 class Task:
@@ -22,6 +22,12 @@ class Task:
 class Resource:
 	def __init__(self, location):
 		self.location = location
+		# vars for movement--
+		self.startLocation = location
+		self.distanceToTravel = None
+		self.directionToTravel = None
+		self.moving = False
+		#--
 		
 class Boat(Resource):		
 	def __init__(self, locatedAt, capacity):
@@ -91,3 +97,12 @@ class Location:
 	def __init__(self, longitude, latitude):
 		self.__longitude = longitude
 		self.__latitude = latitude
+	def y(self):
+		return self.__longitude
+	def x(self):
+		return self.__latitude
+	def set(self, x, y):
+		self.__longitude = y
+		self.__latitude = x
+	def get(self):
+		return (self.__latitude, self.__longitude)

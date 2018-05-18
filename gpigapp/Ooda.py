@@ -1,4 +1,5 @@
-from gpigapp import Model as modelLib#, Decide as decideLib
+from gpigapp import Model as modelLib
+from gpigapp import Decide as decideLib
 from flask_socketio import emit
 import json
 
@@ -15,7 +16,7 @@ class Ooda():
         pass
 
     def decide(self):
-        pass
+        decideLib.decide(self.model)
     
     def act(self):
         return self.model.tasks
