@@ -3,7 +3,7 @@ from flask_socketio import emit
 import base64
 import numpy
 import cv2
-import jsonpickle
+import json_tricks
 
 @socketio.on("loadBeforeImage")
 def loadBeforeImage(img):
@@ -42,4 +42,4 @@ def decide():
 
 @socketio.on("act")
 def act():
-    socketio.emit("updateModel", jsonpickle.encode(ooda.act()))
+    socketio.emit("updateModel", json_tricks.dumps(ooda.act(), primitives=True))

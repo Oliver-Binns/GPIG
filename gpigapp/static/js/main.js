@@ -30,7 +30,7 @@ socket.on('displayMapImage', function(imgStr)
 
 socket.on("updateModel", function(model)
 {
-    console.log("new model: " + model)
+    
 });
 
 
