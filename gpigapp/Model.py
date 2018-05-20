@@ -60,7 +60,7 @@ class Resource:
 	def __init__(self, location):
 		self.location = location
 		# vars for movement--
-		self.startLocation = location
+		self.startLocation = Location(self.location.x(), self.location.y())
 		self.distanceToTravel = None
 		self.directionToTravel = None
 		self.moving = False
