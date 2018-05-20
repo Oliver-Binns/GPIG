@@ -16,7 +16,11 @@ socket.on('connect', function()
     socket.emit("loadAfterImage", {});
     socket.emit("loadMapImage", {});
 
-    socket.emit("decide"); socket.emit("act");
+    let updateloop = window.setInterval(()=>{
+        socket.emit("decide"); 
+        socket.emit("stepSim");
+    },100)
+
 });
 
 socket.on('displayBeforeImage', function(imgStr)
@@ -39,7 +43,7 @@ function scaleX(x)
 {
     var ORIGX = 1240;
     var sX = $("#beforeImage").width()/ORIGX;
-    console.log(x*sX);
+    //console.log(x*sX);
     return x*sX;
 }
 
@@ -47,13 +51,14 @@ function scaleY(y)
 {
     var ORIGY = 697;
     var sY = $("#beforeImage").height()/ORIGY;
-    console.log(y*sY)
+    //console.log(y*sY)
     return y*sY;
 }
 
 socket.on("updateModel", function(model)
 {
     console.log("Update model...");
+
     //TODO
     //update task list (needs to be implemented on the UI first)
     //update resource readout

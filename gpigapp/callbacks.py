@@ -43,3 +43,7 @@ def decide():
 @socketio.on("act")
 def act():
     socketio.emit("updateModel", json_tricks.dumps(ooda.act(), primitives=True))
+
+@socketio.on("stepSim")
+def stepSim():
+    socketio.emit("updateModel", json_tricks.dumps(ooda.stepSim(), primitives=True))

@@ -25,7 +25,7 @@ class Ooda():
         return self.model.getFrontendModel()
 
     def oodaLoop(self):
-        self.loop = True
+        self.loop = False
 
         while(self.loop):
             self.observe()
@@ -37,3 +37,7 @@ class Ooda():
 
     def oodaLoopStop(self):
         self.loop = False
+
+    def stepSim(self):
+        self.sim.simStep(self.model)# update sim/model
+        return self.model.getFrontendModel()
