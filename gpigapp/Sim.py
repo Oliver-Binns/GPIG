@@ -7,7 +7,7 @@ class Sim():
         def __init__(self):
             self.lastTime = datetime.datetime.now()
             self.agentspeed = 0.005 #speed for agents to move at
-            self.printDebugInfo = True
+            self.printDebugInfo = False
 
         def __elapsed_ms__(self, start, end):
             return (end-start).total_seconds()*1000
