@@ -7,6 +7,8 @@ var PEOPLE_LAYER =  "peopleLayer";
 var BUILDING_SIZE = 35;
 var RESOURCE_SIZE = 15;
 
+var floodImg = new Image();
+
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 socket.on('connect', function()
 {
@@ -53,6 +55,17 @@ function scaleY(y)
     return y*sY;
 }
 
+//Used to clear all information except for the flood map data
+//This is done to prevent flickering caused by redrawing the flood data image
+function preUpdateClearCanvas()
+{
+    $("canvas#main").removeLayerGroup(BUILDINGS_LAYER)
+                    .removeLayerGroup(SAFEZONES_LAYER)
+                    .removeLayerGroup(RESOURCES_LAYER)
+                    .removeLayerGroup(PEOPLE_LAYER)
+                    .drawLayers()
+}
+
 socket.on("updateModel", function(model)
 {
     console.log("Update model...");
@@ -63,9 +76,9 @@ socket.on("updateModel", function(model)
     //update affected persons on map
 
     var model = $.parseJSON(model);
-    
+
     //clear the layers and force the canvas to update before the new data is drawn
-    $("canvas#main").removeLayers().drawLayers();
+    preUpdateClearCanvas();
 
     if($("#checkbox-affected-buildings").prop("checked"))
     {
@@ -128,6 +141,25 @@ socket.on("updateModel", function(model)
                     y: scaleY(model["responders"][idx]["location"]["_Location__latitude"]),
                     radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
                 });
+        }
+    }
+
+    if($("#checkbox-flood-area").prop("checked"))
+    {
+        if(floodImg.src != ("data:image/png;base64,"+model.flood))
+        {
+            $("canvas#main").removeLayer(FLOOD_LAYER).drawLayers();
+            floodImg.src = "data:image/png;base64,"+model.flood
+            $("canvas#main").drawImage(
+                {
+                    source: floodImg,
+                    x: $("#beforeImage").width()/2,
+                    y: $("#beforeImage").height()/2,
+                    scale: 1.30,
+                    fromCenter: true,
+                    layer: FLOOD_LAYER
+                }
+            )
         }
     }
 });
@@ -228,8 +260,6 @@ $( document ).ready(function() {
         }
         $("canvas#main").drawLayers();
     });
-
-    $("canvas#main").addLayer({name: FLOOD_LAYER, fillStyle: "rgba(41, 148, 219, 0.5)", type:"rectangle", x: 100, y: 100, width: 200, height: 250}).drawLayers();
 });
 
 //wait for the image to load before setting the canvas size and attempting to draw

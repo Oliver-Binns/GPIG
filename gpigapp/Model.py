@@ -1,5 +1,6 @@
 from abc import ABC
 from gpigapp import Data
+import base64
 
 # mje518 I added a class to hold the entire model for the decision making
 class Model:
@@ -45,6 +46,10 @@ class Model:
 						self.paramedics.append(r)
 					else:
 						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
+
+				with open("data/overlay.png", "rb") as imageFile:
+					b64img = base64.b64encode(imageFile.read())
+					self.flood = b64img.decode()
 
 		return FrontModel(self)
 
