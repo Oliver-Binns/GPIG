@@ -43,7 +43,6 @@ function scaleX(x)
 {
     var ORIGX = 1240;
     var sX = $("#beforeImage").width()/ORIGX;
-    //console.log(x*sX);
     return x*sX;
 }
 
@@ -51,7 +50,6 @@ function scaleY(y)
 {
     var ORIGY = 697;
     var sY = $("#beforeImage").height()/ORIGY;
-    //console.log(y*sY)
     return y*sY;
 }
 
@@ -62,65 +60,75 @@ socket.on("updateModel", function(model)
     //TODO
     //update task list (needs to be implemented on the UI first)
     //update resource readout
-    //update resource locations on map
     //update affected persons on map
 
     var model = $.parseJSON(model);
-    $("canvas#main").removeLayers();
+    
+    //clear the layers and force the canvas to update before the new data is drawn
+    $("canvas#main").removeLayers().drawLayers();
 
-    for (var idx in model["affectedBuildings"])
-    {        
-        $("canvas#main").drawEllipse(
+    if($("#checkbox-affected-buildings").prop("checked"))
+    {
+        for (var idx in model["affectedBuildings"])
+        {        
+            $("canvas#main").drawEllipse(
+            {
+                layer: true, fillStyle: "rgba(221, 17, 17, 0.5)",
+                x: scaleX(model["affectedBuildings"][idx]["location"]["_Location__longitude"]),
+                y: scaleY(model["affectedBuildings"][idx]["location"]["_Location__latitude"]),
+                width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [BUILDINGS_LAYER]
+            });
+        }
+    }
+
+    if($("#checkbox-safe-zones").prop("checked"))
+    {
+        for (var idx in model["safehouses"])
         {
-            layer: true, fillStyle: "rgba(221, 17, 17, 0.5)",
-            x: scaleX(model["affectedBuildings"][idx]["location"]["_Location__longitude"]),
-            y: scaleY(model["affectedBuildings"][idx]["location"]["_Location__latitude"]),
-            width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [BUILDINGS_LAYER]
-        });
+            $("canvas#main").drawEllipse(
+                {
+                    layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
+                    x: scaleX(model["safehouses"][idx]["location"]["_Location__longitude"]),
+                    y: scaleY(model["safehouses"][idx]["location"]["_Location__latitude"]),
+                    width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
+                });
+        }
     }
 
-    for (var idx in model["safehouses"])
+    if($("#checkbox-resources").prop("checked"))
     {
-        $("canvas#main").drawEllipse(
-            {
-                layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
-                x: scaleX(model["safehouses"][idx]["location"]["_Location__longitude"]),
-                y: scaleY(model["safehouses"][idx]["location"]["_Location__latitude"]),
-                width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
-            });
-    }
+        for (var idx in model["boats"])
+        {
+            $("canvas#main").drawRect(
+                {
+                    layer: true, fillStyle: "blue",
+                    x: scaleX(model["boats"][idx]["location"]["_Location__longitude"]),
+                    y: scaleY(model["boats"][idx]["location"]["_Location__latitude"]),
+                    width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
+                });
+        }
+    
+        for (var idx in model["paramedics"])
+        {
+            $("canvas#main").drawRect(
+                {
+                    layer: true, fillStyle: "rgba(158, 56, 255, 0.5)",
+                    x: scaleX(model["paramedics"][idx]["location"]["_Location__longitude"]),
+                    y: scaleY(model["paramedics"][idx]["location"]["_Location__latitude"]),
+                    width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
+                });
+        }
 
-    for (var idx in model["boats"])
-    {
-        $("canvas#main").drawRect(
-            {
-                layer: true, fillStyle: "blue",
-                x: scaleX(model["boats"][idx]["location"]["_Location__longitude"]),
-                y: scaleY(model["boats"][idx]["location"]["_Location__latitude"]),
-                width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
-            });
-    }
-
-    for (var idx in model["paramedics"])
-    {
-        $("canvas#main").drawRect(
-            {
-                layer: true, fillStyle: "rgba(158, 56, 255, 0.5)",
-                x: scaleX(model["paramedics"][idx]["location"]["_Location__longitude"]),
-                y: scaleY(model["paramedics"][idx]["location"]["_Location__latitude"]),
-                width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
-            });
-    }
-
-    for (var idx in model["responders"])
-    {
-        $("canvas#main").drawPolygon(
-            {
-                layer: true, fillStyle: "rbga(255,255,0,0.5)", sides: 3,
-                x: scaleX(model["responders"][idx]["location"]["_Location__longitude"]),
-                y: scaleY(model["responders"][idx]["location"]["_Location__latitude"]),
-                radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
-            });
+        for (var idx in model["responders"])
+        {
+            $("canvas#main").drawPolygon(
+                {
+                    layer: true, fillStyle: "rbga(255,255,0,0.5)", sides: 3,
+                    x: scaleX(model["responders"][idx]["location"]["_Location__longitude"]),
+                    y: scaleY(model["responders"][idx]["location"]["_Location__latitude"]),
+                    radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
+                });
+        }
     }
 });
 
