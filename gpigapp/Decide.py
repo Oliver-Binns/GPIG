@@ -20,6 +20,7 @@ def decide(Model):
         task = createTask(Model.buildings[bpListIndex], Model.resources, getClosestSafehouse(Model.buildings[bpListIndex], safeHouses)[0])
         if(task is not None):
             for resource in task.resources:
+                Model.assignedResources.append(resource)
                 Model.resources.remove(resource)
             Model.tasks.append(task)
             bpListIndex += 1

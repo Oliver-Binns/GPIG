@@ -6,6 +6,7 @@ class Model:
 	def __init__(self, tasks, resources, affectedPersons, buildings):
 		self.tasks = tasks
 		self.resources = resources
+		self.assignedResources = []
 		self.affectedPersons = affectedPersons
 		self.buildings = buildings
 		self.buildingPriorityList = []
@@ -35,7 +36,7 @@ class Model:
 				self.responders = []
 				self.paramedics = []
 
-				for r in m.resources:
+				for r in (m.resources+m.assignedResources):
 					if isinstance(r, Boat):
 						self.boats.append(r)
 					elif isinstance(r, Responder):

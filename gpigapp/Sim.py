@@ -62,6 +62,7 @@ class Sim():
                 for task in tasksToRemove:
                     resToReallocate = task.resources
                     model.resources+=resToReallocate #add resources to resources list
+                    model.assignedResources = [x for x in model.assignedResources if x not in resToReallocate]
                     model.tasks.remove(task) #remove task
          
         def customPrint(self, printVal):
