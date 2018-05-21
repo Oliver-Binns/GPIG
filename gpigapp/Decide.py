@@ -26,6 +26,7 @@ def decide(Model):
             bpListIndex += 1
         else:
             keepAssigning = False
+    #TODO: prevent creating tasks for buildings that currently have a task assigned, we currently dont remove them from the building priority list, atm if we did remove, they'd just get added back in
 
 ##
 #Calculates the priority of a building based on its occupants and location

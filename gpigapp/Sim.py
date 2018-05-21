@@ -47,11 +47,12 @@ class Sim():
                             resource.location.set(task.destinations[0].location.x(), task.destinations[0].location.y())
                             resource.moving = False
                             self.customPrint("resource at dest")
-                            #TODO: set building as serviced
                         else:
                             resource.location.set(current[0], current[1]) # update resource object location
                 # update destination if all resources in task are there
                 if(all(not res.moving for res in task.resources)): 
+                    if(isinstance(task.destinations[0], modelLib.AffectedBuilding)):
+                        task.destinations[0].isServiced = True
                     task.destinations.pop(0)
                     self.customPrint("newDest")
 
