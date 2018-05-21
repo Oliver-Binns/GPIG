@@ -6,7 +6,7 @@ import numpy
 class Sim():
         def __init__(self):
             self.lastTime = datetime.datetime.now()
-            self.agentspeed = 0.005 #speed for agents to move at
+            self.agentspeed = 0.05 #speed for agents to move at
             self.printDebugInfo = False
 
         def __elapsed_ms__(self, start, end):
@@ -15,6 +15,7 @@ class Sim():
 
         def simStep(self, model):
             elapsed = self.__elapsed_ms__(self.lastTime, datetime.datetime.now())
+            self.lastTime = datetime.datetime.now()
 
             tasksToRemove = []
 
@@ -46,6 +47,7 @@ class Sim():
                             resource.location.set(task.destinations[0].location.x(), task.destinations[0].location.y())
                             resource.moving = False
                             self.customPrint("resource at dest")
+                            #TODO: set building as serviced
                         else:
                             resource.location.set(current[0], current[1]) # update resource object location
                 # update destination if all resources in task are there
