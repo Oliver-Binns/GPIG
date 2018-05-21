@@ -166,6 +166,10 @@ socket.on("updateModel", function(model)
 
 
 $( document ).ready(function() {
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    
     $("#checkbox-flood-area").change(function()
     {
         if(this.checked)
@@ -268,7 +272,6 @@ $("#beforeImage").on('load', function(){
     $("canvas#main")[0].height = $("#beforeImage").height();
     $("canvas#main").drawLayers();
 });
-
 
 
 function showBeforeImage()

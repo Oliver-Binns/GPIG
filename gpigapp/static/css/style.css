@@ -72,25 +72,42 @@ nav ul li:active
     width: 400px;
     float: right;
 }
+.tasks>div.overview{
+    background-color:darkslategray;
+    color:white;
+}
+.tasks>div.overview .progress{
+    margin-top:15px;
+    margin-bottom:15px;
+}
+.tasks>div{
+    position:relative;
+    padding:20px;
+}
 .tasks>div .arrow{
     z-index:3;
     position:absolute;
+    top:50%;
+    margin-top:-24px;
+    margin-left:-56px;
     display:none;
     width: 0; 
     height: 0; 
     border-top: 24px solid transparent;
     border-bottom: 24px solid transparent; 
     border-right: 36px solid whitesmoke;
-    margin-left:-56px;
 }
 .tasks>div.active .arrow{
     display:block;
 }
-.tasks>div{
-    padding:20px;
-}
 .tasks>div h1{
     margin-bottom: 0;
+}
+.tasks>div .resources{
+    display:none;
+}
+.tasks>div.active .resources{
+    display:block;
 }
 .tasks>hr{
     margin:0;
