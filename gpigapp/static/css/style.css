@@ -64,30 +64,45 @@ nav ul li:active
     height:100%;
 }
 
-#panel
+.tasks
 {
     background-color:whitesmoke;
     height: 100%;
-    width: 300px;
+    width: 400px;
     float: right;
 }
-
-#panel #top
-{
-    font-family: 'Courier New', Courier, monospace;
+.tasks hr{
+    margin:0;
+}
+.tasks div{
+    padding:10px;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+.tasks div h1{
+    margin-bottom: 0;
 }
 
 #layers-container
 {
     width:100%;
     height:100%;
-    padding-right: 300px;
+    padding-right: 400px;
     background-color:gray;
 }
 #layers{
     position:relative;
     width:100%;
     height:100%;
+}
+#layers .legend{
+    border-radius: 2px;
+    padding:10px;
+    background-color: whitesmoke;
+    z-index:6;
+    position:absolute;
+    bottom:15px;
+    left:15px;
 }
 #layers .select{
     z-index:5;

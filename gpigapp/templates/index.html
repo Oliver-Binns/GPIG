@@ -9,38 +9,66 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
     <body>
-        <div id="container">
-            <div id="panel">
-                <div id="layer-controls">
-                    <div class="tag">Data</div>
+        <div class="tasks">
+            <div>
+                <h1>Overview</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Resource</td><td>Usage</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rescue Boats</td>
+                            <td>1/2</td>
+                        </tr>
+                        <tr>
+                            <td>Paramedics</td>
+                            <td>4/15</td>
+                        </tr>
+                        <tr>
+                            <td>Firefighters</td>
+                            <td>4/10</td>
+                        </tr>
+                        <tr>
+                            <td>Safe Zone Capacity</td>
+                            <td>35%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div><h1>Task 1</h1></div>
+            <hr>
+            <div><h1>Task 2</h1></div>
+            <hr>
+            <div><h1>Task 3</h1></div>
+            <hr>
+            <div><h1>Task 4</h1></div>
+            <hr>
+            <div><h1>Task 5</h1></div>
+        </div>
+        <div id="layers-container">
+            <div id="layers">
+                <div class="legend">
                     <div>
-                        <input type="checkbox" id="checkbox-flood-area" checked="checked" class="regular-checkbox" /><label for="checkbox-flood-area">Flood Area</label>
+                        <input type="checkbox" id="checkbox-flood-area" checked="checked" class="regular-checkbox" /> <label for="checkbox-flood-area">Flood Area</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="checkbox-affected-buildings" checked="checked" class="regular-checkbox" /><label for="checkbox-affected-buildings">Affected Buildings</label>
+                        <input type="checkbox" id="checkbox-affected-buildings" checked="checked" class="regular-checkbox" /> <label for="checkbox-affected-buildings">Affected Buildings</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="checkbox-safe-zones" checked="checked" class="regular-checkbox" /><label for="checkbox-safe-zones">Safe Zones</label>
+                        <input type="checkbox" id="checkbox-safe-zones" checked="checked" class="regular-checkbox" /> <label for="checkbox-safe-zones">Safe Zones</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="checkbox-resources" checked="checked" class="regular-checkbox" /><label for="checkbox-resources">Resources</label>
+                        <input type="checkbox" id="checkbox-resources" checked="checked" class="regular-checkbox" /> <label for="checkbox-resources">Resources</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="checkbox-people" checked="checked" class="regular-checkbox" /><label for="checkbox-people">Affected People
+                        <input type="checkbox" id="checkbox-people" checked="checked" class="regular-checkbox" /> <label for="checkbox-people">Affected People
                         </label>
                     </div>
                 </div>
-                <hr />
-                <div id="resources">
-                    <h2>Available Resources</h2>
-                    <h3>Rescue Boats: 1/2</h3>
-                    <h3>Paramedics: 4/15</h3>
-                    <h3>Firefighters: 4/10</h3>
-                    <h3>Safe Zone Capacity Remaining: 35%</h3>
-                </div>
-            </div>
-            <div id="layers-container">
-            <div id="layers">
                 <div class="select">
                     <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary active">
@@ -58,7 +86,6 @@
                 <img class="layer" id="beforeImage" />
                 <img class="layer" id="afterImage" style="display: none;" />
                 <img class="layer" id="mapImage" style="display: none;" />
-            </div>
             </div>
         </div>
     </body>
