@@ -1,4 +1,9 @@
 var FLOOD_LAYER = "floodLayer";
+
+var FLOOD_LAYER_HEIGHT = 697;
+var FLOOD_LAYER_WIDTH  = 1240;
+var FLOOD_LAYER_ASPECT = FLOOD_LAYER_WIDTH / FLOOD_LAYER_HEIGHT; 
+
 var BUILDINGS_LAYER = "affectedBuildingsLayer";
 var SAFEZONES_LAYER =  "safezonesLayer";
 var RESOURCES_LAYER =  "resourcesLayer";
@@ -43,16 +48,14 @@ socket.on('displayMapImage', function(imgStr)
 
 function scaleX(x)
 {
-    var ORIGX = 1240;
-    var sX = $("#beforeImage").width()/ORIGX;
-    return x*sX;
+    var sX = $("#beforeImage").width() / FLOOD_LAYER_WIDTH;
+    return x * sX;
 }
 
 function scaleY(y)
 {
-    var ORIGY = 697;
-    var sY = $("#beforeImage").height()/ORIGY;
-    return y*sY;
+    var sY = $("#beforeImage").height() / FLOOD_LAYER_HEIGHT;
+    return y * sY;
 }
 
 //Used to clear all information except for the flood map data
@@ -68,8 +71,6 @@ function preUpdateClearCanvas()
 
 socket.on("updateModel", function(model)
 {
-    console.log("Update model...");
-
     //TODO
     //update task list (needs to be implemented on the UI first)
     //update resource readout
@@ -148,15 +149,36 @@ socket.on("updateModel", function(model)
     {
         if(floodImg.src != ("data:image/png;base64,"+model.flood))
         {
-            $("canvas#main").removeLayer(FLOOD_LAYER).drawLayers();
+            var canvas = $("canvas#main");
+            var image = $("#beforeImage");
+            
+            var image_height = image.height();
+            var image_width = image.width();
+            
+            var image_aspect = image_width / image_height;
+            
+            //if image fits to height!
+            var width = FLOOD_LAYER_ASPECT * image_height / 2;
+            var height = image_height / 2;
+            var scale = image_height / FLOOD_LAYER_HEIGHT;
+            
+            //if image fits to width!
+            if(image_aspect > FLOOD_LAYER_ASPECT){
+                var width = image_width / 2;
+                var height = (image_width / 2) / FLOOD_LAYER_ASPECT;
+                var scale = image_width / FLOOD_LAYER_WIDTH;
+            }
+            
+            canvas.removeLayer(FLOOD_LAYER).drawLayers();
             floodImg.src = "data:image/png;base64,"+model.flood
-            $("canvas#main").drawImage(
+             
+            canvas.drawImage(
                 {
                     source: floodImg,
-                    x: $("#beforeImage").width()/2,
-                    y: $("#beforeImage").height()/2,
-                    scale: 1.30,
-                    fromCenter: true,
+                    x: width,
+                    y: height,
+                    scale: scale,
+                    //fromCenter: true,
                     layer: FLOOD_LAYER
                 }
             )
