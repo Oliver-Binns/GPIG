@@ -5,30 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GPIG</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
     <body>
-        <!-- <header>
-            <nav>
-                <ul>
-                    <li><a>Find Buildings</a></li>
-                    <li><a>Allocate Resources</a></li>
-                </ul>
-            </nav>
-        </header> -->
         <div id="container">
             <div id="panel">
                 <div id="layer-controls">
-                    <h2 class="center">Layers</h2>
-                    <div class="tag">Satellite Image</div>
-                    <div class="button-holder">
-                        <input type="radio" id="radio-before" name="radio-image-set" class="regular-radio" checked="checked" onclick="showBeforeImage();"/><label for="radio-before">Before Flood</label>
-                        <br />
-                        <input type="radio" id="radio-after" name="radio-image-set" class="regular-radio" onclick="showAfterImage();" /><label for="radio-after">After Flood</label>
-                        <br />
-                        <input type="radio" id="radio-map" name="radio-image-set" class="regular-radio" onclick="showMapImage();" /><label for="radio-map">Map View</label>
-                    </div>
-                    <br />
                     <div class="tag">Data</div>
                     <div>
                         <input type="checkbox" id="checkbox-flood-area" checked="checked" class="regular-checkbox" /><label for="checkbox-flood-area">Flood Area</label>
@@ -56,16 +39,34 @@
                     <h3>Safe Zone Capacity Remaining: 35%</h3>
                 </div>
             </div>
+            <div id="layers-container">
             <div id="layers">
+                <div class="select">
+                    <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" id="radio-before" autocomplete="off" onclick="showBeforeImage();" name="options" checked> Before
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" id="radio-after" autocomplete="off" onclick="showAfterImage();" name="options"> After
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" id="radio-map" autocomplete="off" onclick="showMapImage();" name="options"> Map
+                        </label>
+                    </div>
+                </div>
                 <canvas id="main"></canvas>
                 <img class="layer" id="beforeImage" />
                 <img class="layer" id="afterImage" style="display: none;" />
                 <img class="layer" id="mapImage" style="display: none;" />
             </div>
+            </div>
         </div>
     </body>
-    <script src="//code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/21.0.1/min/jcanvas.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='js/main.js') }}"></script>
 </html>
