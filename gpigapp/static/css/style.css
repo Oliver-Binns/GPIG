@@ -135,6 +135,67 @@ nav ul li:active
     bottom:15px;
     left:15px;
 }
+
+/**
+ * Custom Coloured Checkboxes!
+ */
+.legend label{
+    display:inherit;
+    position:relative;
+    padding-left:35px;
+}
+.legend label input{
+    opacity:0;
+    display:none;
+}
+.legend label .checkmark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+.legend label:hover input ~ .checkmark{
+    background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.legend label:nth-child(1) input:checked ~ .checkmark {
+    background-color: rgb(0,0,126);
+}
+.legend label:nth-child(2) input:checked ~ .checkmark {
+    background-color: rgb(221, 17, 17);
+}
+.legend label:nth-child(3) input:checked ~ .checkmark {
+    background-color: rgb(5, 178, 14);
+}
+.legend label:nth-child(4) input:checked ~ .checkmark {
+    background-color: blue;
+}
+/*.legend label:nth-child(5) input:checked ~ .checkmark {
+    background-color: red;
+}*/
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.legend label input:checked ~ .checkmark:after{
+    display:block;
+}
+.legend label .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 10px;
+    top: 6px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
 #layers .select{
     z-index:5;
     position:absolute;
