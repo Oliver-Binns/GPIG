@@ -172,14 +172,16 @@ socket.on("updateModel", function(model)
             canvas.removeLayer(FLOOD_LAYER).drawLayers();
             floodImg.src = "data:image/png;base64,"+model.flood
              
-            canvas.drawImage(
+            canvas.addLayer(
                 {
+                    type: 'image',
                     source: floodImg,
                     x: width,
                     y: height,
                     scale: scale,
-                    //fromCenter: true,
-                    layer: FLOOD_LAYER
+                    fromCenter: true,
+                    layer: true,
+                    groups: [FLOOD_LAYER]
                 }
             )
         }
@@ -187,106 +189,46 @@ socket.on("updateModel", function(model)
 });
 
 
-$( document ).ready(function() {
+$(document).ready(function() {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
     
     $("#checkbox-flood-area").change(function()
     {
-        if(this.checked)
-        {
-            $("canvas#main").setLayerGroup(FLOOD_LAYER,
-                {
-                    visible: true
-                });
-        }
-        else
-        {
-            $("canvas#main").setLayerGroup(FLOOD_LAYER,
-                {
-                    visible: false
-                });
-        }
-        $("canvas#main").drawLayers();
+        setLayerVisibility(FLOOD_LAYER, this.checked);
     });
 
     $("#checkbox-affected-buildings").change(function()
     {
-        if(this.checked)
-        {
-            $("canvas#main").setLayerGroup(BUILDINGS_LAYER,
-                {
-                    visible: true
-                });
-        }
-        else
-        {
-            $("canvas#main").setLayerGroup(BUILDINGS_LAYER,
-                {
-                    visible: false
-                });
-        }
-        $("canvas#main").drawLayers();
+        setLayerVisibility(BUILDINGS_LAYER, this.checked);
     });
 
     $("#checkbox-safe-zones").change(function()
     {
-        if(this.checked)
-        {
-            $("canvas#main").setLayerGroup(SAFEZONES_LAYER,
-                {
-                    visible: true
-                });
-        }
-        else
-        {
-            $("canvas#main").setLayerGroup(SAFEZONES_LAYER,
-                {
-                    visible: false
-                });
-        }
-        $("canvas#main").drawLayers();
+        setLayerVisibility(SAFEZONES_LAYER, this.checked);
     });
 
     $("#checkbox-resources").change(function()
     {
-        if(this.checked)
-        {
-            $("canvas#main").setLayerGroup(RESOURCES_LAYER,
-                {
-                    visible: true
-                });
-        }
-        else
-        {
-            $("canvas#main").setLayerGroup(RESOURCES_LAYER,
-                {
-                    visible: false
-                });
-        }
-        $("canvas#main").drawLayers();
+        setLayerVisibility(RESOURCES_LAYER, this.checked);
     });
 
     $("#checkbox-people").change(function()
     {
-        if(this.checked)
-        {
-            $("canvas#main").setLayerGroup(PEOPLE_LAYER,
-                {
-                    visible: true
-                });
-        }
-        else
-        {
-            $("canvas#main").setLayerGroup(PEOPLE_LAYER,
-                {
-                    visible: false
-                });
-        }
-        $("canvas#main").drawLayers();
+        setLayerVisibility(PEOPLE_LAYER, this.checked);
     });
 });
+
+function setLayerVisibility(layer, value){
+    var canvas = $("canvas#main");
+    canvas.setLayerGroup(layer,
+        {
+            visible: value
+        }
+    );
+    canvas.drawLayers();
+}
 
 //wait for the image to load before setting the canvas size and attempting to draw
 $("#beforeImage").on('load', function(){
