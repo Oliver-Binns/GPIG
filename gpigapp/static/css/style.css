@@ -67,22 +67,34 @@ nav ul li:active
 .tasks
 {
     background-color:whitesmoke;
+    border-left: 1px solid rgba(0,0,0,.1);
     height: 100%;
     width: 400px;
     float: right;
 }
-.tasks hr{
-    margin:0;
+.tasks>div .arrow{
+    z-index:3;
+    position:absolute;
+    display:none;
+    width: 0; 
+    height: 0; 
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent; 
+    border-right: 36px solid whitesmoke;
+    margin-left:-56px;
 }
-.tasks div{
-    padding:10px;
-    padding-top:20px;
-    padding-bottom:20px;
+.tasks>div.active .arrow{
+    display:block;
 }
-.tasks div h1{
+.tasks>div{
+    padding:20px;
+}
+.tasks>div h1{
     margin-bottom: 0;
 }
-
+.tasks>hr{
+    margin:0;
+}
 #layers-container
 {
     width:100%;
