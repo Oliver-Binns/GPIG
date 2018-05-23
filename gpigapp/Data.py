@@ -47,10 +47,11 @@ def getSafeHouses():
         for row in safe:
             location = Model.Location(float(row[1]), float(row[2]))
             impacted = True
-            if row[3] == 0:
+            if row[3] == '0':
                 impacted = False
-            capacity = int(row[5])    
-            safeHouses.append( Model.Safehouse(location, impacted, capacity))
+            if not impacted:
+                capacity = int(row[5])    
+                safeHouses.append( Model.Safehouse(location, impacted, capacity))
 
     return safeHouses
 
@@ -68,19 +69,21 @@ def getBuildings():
         next(affectedBuildings)
         
         for row in affectedBuildings:
+
             location = Model.Location(float(row[1]), float(row[2]))
             impacted = True
-            if row[3] == 0:
+            if row[3] == '0':
                 impacted = False
-            estimatedOccupants = int(row[5])   
-            occupants = row[7].split(',')
+            if impacted :
+                estimatedOccupants = int(row[5])   
+                occupants = row[7].split(',')
 
-            if occupants[0] != '':
-                affectedOccupants = [affected[x] for x in map(int, occupants)] 
-            else:
-                affectedOccupants = []
+                if occupants[0] != '':
+                    affectedOccupants = [affected[x] for x in map(int, occupants)] 
+                else:
+                    affectedOccupants = []
 
-            buildings.append( Model.AffectedBuilding(location, impacted, estimatedOccupants, affectedOccupants))
+                buildings.append( Model.AffectedBuilding(location, impacted, estimatedOccupants, affectedOccupants))
 
     return buildings
 
