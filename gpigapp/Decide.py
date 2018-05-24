@@ -1,4 +1,5 @@
 from gpigapp import Model as modelLib
+import uuid
 
 def decide(Model):
     safeHouses = [safehouse for safehouse in Model.buildings if isinstance(safehouse, modelLib.Safehouse)]
@@ -93,7 +94,7 @@ def createTask(building, resources, closestSafehouse):
         else:
             return None
 
-    return modelLib.Task(assignedResources, [building, closestSafehouse])
+    return modelLib.Task(str(uuid.uuid4()), assignedResources, [building, closestSafehouse])
 
 
 
