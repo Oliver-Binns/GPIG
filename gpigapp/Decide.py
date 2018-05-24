@@ -40,7 +40,6 @@ def decide(Model):
 def calcPriority(building, safehouses):
     priority = 0
 
-    if building.estimatedOccupants != 0:
         priority += building.estimatedOccupants
     else:
         return 0
