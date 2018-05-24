@@ -5,7 +5,7 @@ var FLOOD_LAYER_WIDTH  = 1240;
 var FLOOD_LAYER_ASPECT = FLOOD_LAYER_WIDTH / FLOOD_LAYER_HEIGHT; 
 
 var BUILDINGS_LAYER = "affectedBuildingsLayer";
-var SAFEZONES_LAYER =  "safezonesLayer";
+var REST_CENTRES_LAYER =  "restCentresLayer";
 var RESOURCES_LAYER =  "resourcesLayer";
 var PEOPLE_LAYER =  "peopleLayer";
 
@@ -70,7 +70,7 @@ function updateResourceBars(model)
 function preUpdateClearCanvas()
 {
     $("canvas#main").removeLayerGroup(BUILDINGS_LAYER)
-                    .removeLayerGroup(SAFEZONES_LAYER)
+                    .removeLayerGroup(REST_CENTRES_LAYER)
                     .removeLayerGroup(RESOURCES_LAYER)
                     .removeLayerGroup(PEOPLE_LAYER)
                     .drawLayers()
@@ -102,7 +102,7 @@ socket.on("updateModel", function(model)
         }
     }
 
-    if($("#checkbox-safe-zones").prop("checked"))
+    if($("#checkbox-rest-centres").prop("checked"))
     {
         for (var idx in model["safehouses"])
         {
@@ -111,7 +111,7 @@ socket.on("updateModel", function(model)
                     layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
                     x: scaleX(model["safehouses"][idx]["location"]["_Location__longitude"]),
                     y: scaleY(model["safehouses"][idx]["location"]["_Location__latitude"]),
-                    width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
+                    width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [REST_CENTRES_LAYER]
                 });
         }
     }
@@ -213,9 +213,9 @@ $(document).ready(function() {
         setLayerVisibility(BUILDINGS_LAYER, this.checked);
     });
 
-    $("#checkbox-safe-zones").change(function()
+    $("#checkbox-rest-centres").change(function()
     {
-        setLayerVisibility(SAFEZONES_LAYER, this.checked);
+        setLayerVisibility(REST_CENTRES_LAYER, this.checked);
     });
 
     $("#checkbox-resources").change(function()
