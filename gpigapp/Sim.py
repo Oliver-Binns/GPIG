@@ -52,7 +52,7 @@ class Sim():
                 # update destination if all resources in task are there
                 if(all(not res.moving for res in task.resources)): 
                     if(isinstance(task.destinations[0], modelLib.AffectedBuilding)):
-                        task.destinations[0].isServiced = True
+                        model.buildings.remove(task.destinations[0])
                     task.destinations.pop(0)
                     self.customPrint("newDest")
 

@@ -125,7 +125,7 @@ class Building(ABC):
 class AffectedBuilding(Building):
 	def __init__(self, location, isImpacted, estimatedOccupants, affectedOccupants):
 		super().__init__(location, isImpacted, estimatedOccupants, affectedOccupants)
-		self.isServiced = False
+		self.taskAssigned = False
 
 class Safehouse(Building):
 	def __init__(self, location, isImpacted, capacity):

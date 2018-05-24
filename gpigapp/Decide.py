@@ -6,7 +6,7 @@ def decide(Model):
 
     #Adding any unserviced buildings to the building priority list with their calculated priority
     for building in affectedBuildings:
-        if(building.isServiced == False and not any(building in subList for subList in Model.buildingPriorityList)):
+        if(not any(building in subList for subList in Model.buildingPriorityList)):
             priority = calcPriority(building, safeHouses)
             Model.buildingPriorityList.append((priority, building))
 
@@ -16,12 +16,17 @@ def decide(Model):
     keepAssigning = True
     bpListIndex = 0
     #keep creating task and assigning them resources until there are not enough resources for the next task
-    while(keepAssigning):
-        task = createTask(Model.buildings[bpListIndex], Model.resources, getClosestSafehouse(Model.buildings[bpListIndex], safeHouses)[0])
+    while(keepAssigning and bpListIndex < len(Model.buildingPriorityList)):
+        building = Model.buildingPriorityList[bpListIndex][1]
+        if building.taskAssigned == True or Model.buildingPriorityList[bpListIndex][0] == 0:
+            bpListIndex += 1
+            continue
+        task = createTask(building, Model.resources, getClosestSafehouse(building, safeHouses)[0])
         if(task is not None):
             for resource in task.resources:
                 Model.assignedResources.append(resource)
                 Model.resources.remove(resource)
+                building.taskAssigned = True
             Model.tasks.append(task)
             bpListIndex += 1
         else:
@@ -34,14 +39,17 @@ def decide(Model):
 #Returns an int
 def calcPriority(building, safehouses):
     priority = 0
+
+    if building.estimatedOccupants != 0:
+        priority += building.estimatedOccupants
+    else:
+        return 0
     
     for occupant in building.affectedOccupants:
         priority += occupant.priority
-
-    priority += building.estimatedOccupants
     
     priority += 1*getClosestSafehouse(building, safehouses)[1]
-
+    
     return priority
 
 ##
