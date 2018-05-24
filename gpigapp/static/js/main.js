@@ -246,24 +246,8 @@ $("#beforeImage").on('load', function(){
     $("canvas#main").drawLayers();
 });
 
-
-function showBeforeImage()
-{
-    $("#beforeImage").show();
-    $("#afterImage").hide();
-    $("#mapImage").hide();
-}
-
-function showAfterImage()
-{
-    $("#beforeImage").hide();
-    $("#afterImage").show();
-    $("#mapImage").hide();
-}
-
-function showMapImage()
-{
-    $("#beforeImage").hide();
-    $("#afterImage").hide();
-    $("#mapImage").show();
+function showMap(type){
+    var map = $("#" + type + "Image")
+    map.show();
+    map.siblings('img').hide();
 }
