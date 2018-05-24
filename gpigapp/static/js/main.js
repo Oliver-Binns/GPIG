@@ -58,6 +58,13 @@ function scaleY(y)
     return y * sY;
 }
 
+function updateResourceBars(model)
+{
+    $(".progress-bar#boats").css("width", model.assignedBoats+"%");
+    $(".progress-bar#paramedics").css("width", model.assignedParamedics+"%");
+    $(".progress-bar#firefighters").css("width", model.assignedResponders+"%");
+}
+
 //Used to clear all information except for the flood map data
 //This is done to prevent flickering caused by redrawing the flood data image
 function preUpdateClearCanvas()
@@ -113,9 +120,9 @@ socket.on("updateModel", function(model)
     {
         for (var idx in model["boats"])
         {
-            $("canvas#main").drawRect(
+            $("canvas#main").drawImage(
                 {
-                    layer: true, fillStyle: "blue",
+                    layer: true, source: "/static/img/ship.png",
                     x: scaleX(model["boats"][idx]["location"]["_Location__longitude"]),
                     y: scaleY(model["boats"][idx]["location"]["_Location__latitude"]),
                     width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
@@ -124,9 +131,9 @@ socket.on("updateModel", function(model)
     
         for (var idx in model["paramedics"])
         {
-            $("canvas#main").drawRect(
+            $("canvas#main").drawImage(
                 {
-                    layer: true, fillStyle: "rgba(158, 56, 255, 0.5)",
+                    layer: true, source: "/static/img/medkit.png",
                     x: scaleX(model["paramedics"][idx]["location"]["_Location__longitude"]),
                     y: scaleY(model["paramedics"][idx]["location"]["_Location__latitude"]),
                     width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
@@ -135,12 +142,12 @@ socket.on("updateModel", function(model)
 
         for (var idx in model["responders"])
         {
-            $("canvas#main").drawPolygon(
+            $("canvas#main").drawImage(
                 {
-                    layer: true, fillStyle: "rbga(255,255,0,0.5)", sides: 3,
+                    layer: true, source: "/static/img/fire-extinguisher.png",
                     x: scaleX(model["responders"][idx]["location"]["_Location__longitude"]),
                     y: scaleY(model["responders"][idx]["location"]["_Location__latitude"]),
-                    radius: RESOURCE_SIZE, rotate: 180, groups: [RESOURCES_LAYER]
+                    width: RESOURCE_SIZE, height: RESOURCE_SIZE, groups: [RESOURCES_LAYER]
                 });
         }
     }
@@ -186,6 +193,8 @@ socket.on("updateModel", function(model)
             )
         }
     }
+
+    updateResourceBars(model);
 });
 
 

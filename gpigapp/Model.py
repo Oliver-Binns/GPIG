@@ -34,10 +34,13 @@ class Model:
 						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
 
 				self.boats = []
+				self.assignedBoats = 0
 				self.responders = []
+				self.assignedResponders = 0
 				self.paramedics = []
+				self.assignedParamedics = 0
 
-				for r in (m.resources+m.assignedResources):
+				for r in (m.resources):
 					if isinstance(r, Boat):
 						self.boats.append(r)
 					elif isinstance(r, Responder):
@@ -46,6 +49,23 @@ class Model:
 						self.paramedics.append(r)
 					else:
 						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
+
+				for r in (m.assignedResources):
+					if isinstance(r, Boat):
+						self.boats.append(r)
+						self.assignedBoats += 1
+					elif isinstance(r, Responder):
+						self.responders.append(r)
+						self.assignedResponders += 1
+					elif isinstance(r, Paramedic):
+						self.paramedics.append(r)
+						self.assignedParamedics += 1
+					else:
+						raise Exception("Don't know how to display type {} on frontend".format(type(b)))
+
+				self.assignedBoats = self.assignedBoats/len(self.boats)*100
+				self.assignedResponders = self.assignedResponders/len(self.responders)*100
+				self.assignedParamedics = self.assignedParamedics/len(self.paramedics)*100
 
 				with open("data/overlay.png", "rb") as imageFile:
 					b64img = base64.b64encode(imageFile.read())
