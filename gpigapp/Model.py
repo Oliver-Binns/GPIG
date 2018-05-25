@@ -1,6 +1,8 @@
 from abc import ABC
 from gpigapp import Data
 import base64
+from functools import reduce
+import operator
 
 # mje518 I added a class to hold the entire model for the decision making
 class Model:
@@ -66,6 +68,7 @@ class Model:
 				self.assignedBoats = self.assignedBoats/len(self.boats)*100
 				self.assignedResponders = self.assignedResponders/len(self.responders)*100
 				self.assignedParamedics = self.assignedParamedics/len(self.paramedics)*100
+				self.remainingRestCentreSpace = 100.0 - sum([x.getRemainingCapacity() for x in self.safehouses])/sum([x.capacity for x in self.safehouses])*100
 
 				with open("data/overlay.png", "rb") as imageFile:
 					b64img = base64.b64encode(imageFile.read())

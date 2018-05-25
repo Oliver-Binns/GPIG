@@ -63,6 +63,7 @@ function updateResourceBars(model)
     $(".progress-bar#boats").css("width", model.assignedBoats+"%");
     $(".progress-bar#paramedics").css("width", model.assignedParamedics+"%");
     $(".progress-bar#firefighters").css("width", model.assignedResponders+"%");
+    $(".progress-bar#rest-centres").css("width", model.remainingRestCentreSpace+"%");
 }
 
 //Used to clear all information except for the flood map data
