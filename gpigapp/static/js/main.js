@@ -9,8 +9,8 @@ var SAFEZONES_LAYER =  "safezonesLayer";
 var RESOURCES_LAYER =  "resourcesLayer";
 var PEOPLE_LAYER =  "peopleLayer";
 
-var BUILDING_SIZE = 35;
-var RESOURCE_SIZE = 15;
+var BUILDING_SIZE = 40;
+var RESOURCE_SIZE = 25;
 
 var floodImg = new Image();
 
