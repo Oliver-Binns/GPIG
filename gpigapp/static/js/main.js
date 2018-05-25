@@ -14,6 +14,8 @@ var RESOURCE_SIZE = 25;
 
 var floodImg = new Image();
 
+var updateLoop;
+
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 socket.on('connect', function()
 {
@@ -23,12 +25,24 @@ socket.on('connect', function()
     socket.emit("loadAfterImage", {});
     socket.emit("loadMapImage", {});
 
-    let updateloop = window.setInterval(()=>{
-        socket.emit("decide"); 
-        socket.emit("stepSim");
-    },100)
+    setUIUpdateInterval(100);
 
 });
+
+function setUIUpdateInterval(ms)
+{
+    clearInterval(updateLoop);
+    updateLoop = window.setInterval(() => 
+    {
+        socket.emit("decide");
+        socket.emit("stepSim");
+    }, ms);
+}
+
+function setServerSpeed(speed)
+{
+    socket.emit("changeSpeed", speed);
+}
 
 socket.on('displayBeforeImage', function(imgStr)
 {

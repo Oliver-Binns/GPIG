@@ -55,3 +55,7 @@ def acceptTask(uid):
 @socketio.on("rejectTask")
 def rejectTask(uid):
     pass
+
+@socketio.on("changeSpeed")
+def changespeed(speed):
+    pass
