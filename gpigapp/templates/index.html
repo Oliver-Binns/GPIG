@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
     <body>
-        <div class="tasks">
+        <div class="side-bar">
             <div class="overview">
                 <h1>Resource Usage</h1>
                 <div class="progress" style="height: 20px;">
@@ -27,55 +27,7 @@
                     <div class="progress-bar" id="rest-centres" role="progressbar" style="width: 35%;" data-toggle="tooltip" data-placement="top" title="Rest Centre Capacity"><i class="fas fa-warehouse"></i></div>
                 </div>
             </div>
-            <hr/>
-            <div class="active">
-                <div class="arrow"></div> 
-                <h1>Task 1</h1>
-                <div class="resources">
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Boats"><i class="fas fa-ship"></i> 2</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i> 1</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i> 1</span>
-                </div>
-            </div>
-            <hr/>
-            <div>
-                <div class="arrow"></div> 
-                <h1>Task 2</h1>
-                <div class="resources">
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Boats"><i class="fas fa-ship"></i> 2</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i> 1</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i> 1</span>
-                </div>
-            </div>
-            <hr/>
-            <div>
-                <div class="arrow"></div> 
-                <h1>Task 3</h1>
-                <div class="resources">
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Boats"><i class="fas fa-ship"></i> 2</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i> 1</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i> 1</span>
-                </div>
-            </div>
-            <hr/>
-            <div>
-                <div class="arrow"></div> 
-                <h1>Task 4</h1>
-                <div class="resources">
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Boats"><i class="fas fa-ship"></i> 2</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i> 1</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i> 1</span>
-                </div>
-            </div>
-            <hr/>
-            <div>
-                <div class="arrow"></div> 
-                <h1>Task 5</h1>
-                <div class="resources">
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Boats"><i class="fas fa-ship"></i> 2</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i> 1</span>
-                    <span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i> 1</span>
-                </div>
+            <div id="tasks">
             </div>
         </div>
         <div id="layers-container">

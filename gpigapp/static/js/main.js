@@ -84,6 +84,15 @@ socket.on("updateModel", function(model)
     //update affected persons on map
 
     var model = $.parseJSON(model);
+    
+    var task_container = $("#tasks");
+    if(task_container.children().length == 0){
+        //Container is empty- create elements
+        displayTasks(task_container, model["tasks"]);
+    }else{
+        //Container is NOT empty, update
+    }
+   
 
     //clear the layers and force the canvas to update before the new data is drawn
     preUpdateClearCanvas();
@@ -195,14 +204,72 @@ socket.on("updateModel", function(model)
     }
 
     updateResourceBars(model);
-});
-
-
-$(document).ready(function() {
+    
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+});
+
+function displayTasks(container, tasks){
+    container.empty();
     
+    container.append(
+        createTaskView("overview", "Overview", true, null, [])
+    );
+    
+    for(var task in tasks){
+        container.append("<hr/>");
+        var task_obj = tasks[task];
+        var task_id = parseInt(task) + 1;
+     
+        var task_view = createTaskView(task_id["UID"], "Task " + task_id, false,
+                                       task_obj["percentComplete"],
+                                       task_obj["resources"]
+        );
+        
+        container.append(task_view);
+        
+    }
+}
+
+function createTaskView(uid, name, active, completion, resources){
+    var task_view = $('<div id="#' + uid + '"><div class="arrow"></div></div>');
+    task_view.append("<h1>" + name + "</h1>");
+    
+    if(active){
+        task_view.addClass("active");
+    }
+    
+    var resources_view = $("<div class='resources'></div>");
+    var boats = 0;
+    var paramedics = 0;
+    var firefighters = 0;
+    for(var i = 0; i < resources.length; i++){
+        var resource = resources[i];
+        if(resource["capacity"] != null){
+            boats++;
+        }else{
+            paramedics++;
+        }
+        //console.log(resource);
+    }
+    resources_view.append(getResourceLabel("Boats", "ship", boats));
+    resources_view.append(getResourceLabel("Paramedics", "medkit", paramedics));
+    resources_view.append(getResourceLabel("Firefighters", "fire-extinguisher", firefighters));
+    task_view.append(resources_view);
+    
+    return task_view;
+}
+
+function getResourceLabel(name, icon, count){
+    var label = '<span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="{0}"><i class="fas fa-{1}"></i> {2}</span>';
+    label = label.replace("{0}", name).replace("{1}", icon).replace("{2}", count);
+    return $(label);
+}
+
+
+
+$(document).ready(function() {
     $("#checkbox-flood-area").change(function()
     {
         setLayerVisibility(FLOOD_LAYER, this.checked);

@@ -64,7 +64,7 @@ nav ul li:active
     height:100%;
 }
 
-.tasks
+.side-bar
 {
     background-color:whitesmoke;
     border-left: 1px solid rgba(0,0,0,.1);
@@ -74,19 +74,21 @@ nav ul li:active
     z-index:5;
     position:relative;
 }
-.tasks>div.overview{
+
+.side-bar>div.overview{
     background-color:darkslategray;
+    padding:20px;
     color:white;
 }
-.tasks>div.overview .progress{
+.side-bar>div.overview .progress{
     margin-top:15px;
     margin-bottom:15px;
 }
-.tasks>div{
+#tasks>div{
     position:relative;
     padding:20px;
 }
-.tasks>div .arrow{
+#tasks>div .arrow{
     position:absolute;
     top:50%;
     margin-top:-24px;
@@ -98,19 +100,19 @@ nav ul li:active
     border-bottom: 24px solid transparent; 
     border-right: 36px solid whitesmoke;
 }
-.tasks>div.active .arrow{
+#tasks>div.active .arrow{
     display:block;
 }
-.tasks>div h1{
+#tasks>div h1{
     margin-bottom: 0;
 }
-.tasks>div .resources{
+#tasks>div .resources{
     display:none;
 }
-.tasks>div.active .resources{
+#tasks>div.active .resources{
     display:block;
 }
-.tasks>hr{
+#tasks>hr{
     margin:0;
 }
 #layers-container
