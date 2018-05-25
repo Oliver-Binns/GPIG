@@ -268,7 +268,17 @@ function getResourceLabel(name, icon, count){
     return $(label);
 }
 
+function acceptTask(uid)
+{
+    socket.emit("acceptTask", uid);
+    //update UI?
+}
 
+function rejectTask(uid)
+{
+    socket.emit("rejectTask", uid);
+    //update UI?
+}
 
 $(document).ready(function() {
     $("#checkbox-flood-area").change(function()

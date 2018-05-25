@@ -47,3 +47,11 @@ def act():
 @socketio.on("stepSim")
 def stepSim():
     socketio.emit("updateModel", json_tricks.dumps(ooda.stepSim(), primitives=True))
+
+@socketio.on("acceptTask")
+def acceptTask(uid):
+    pass
+
+@socketio.on("rejectTask")
+def rejectTask(uid):
+    pass
