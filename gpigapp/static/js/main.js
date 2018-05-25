@@ -5,7 +5,7 @@ var FLOOD_LAYER_WIDTH  = 1240;
 var FLOOD_LAYER_ASPECT = FLOOD_LAYER_WIDTH / FLOOD_LAYER_HEIGHT; 
 
 var BUILDINGS_LAYER = "affectedBuildingsLayer";
-var SAFEZONES_LAYER =  "safezonesLayer";
+var REST_CENTRES_LAYER =  "restCentresLayer";
 var RESOURCES_LAYER =  "resourcesLayer";
 var PEOPLE_LAYER =  "peopleLayer";
 
@@ -70,7 +70,7 @@ function updateResourceBars(model)
 function preUpdateClearCanvas()
 {
     $("canvas#main").removeLayerGroup(BUILDINGS_LAYER)
-                    .removeLayerGroup(SAFEZONES_LAYER)
+                    .removeLayerGroup(REST_CENTRES_LAYER)
                     .removeLayerGroup(RESOURCES_LAYER)
                     .removeLayerGroup(PEOPLE_LAYER)
                     .drawLayers()
@@ -84,6 +84,15 @@ socket.on("updateModel", function(model)
     //update affected persons on map
 
     var model = $.parseJSON(model);
+    
+    var task_container = $("#tasks");
+    if(task_container.children().length == 0){
+        //Container is empty- create elements
+        displayTasks(task_container, model["tasks"]);
+    }else{
+        //Container is NOT empty, update
+    }
+   
 
     //clear the layers and force the canvas to update before the new data is drawn
     preUpdateClearCanvas();
@@ -102,7 +111,7 @@ socket.on("updateModel", function(model)
         }
     }
 
-    if($("#checkbox-safe-zones").prop("checked"))
+    if($("#checkbox-rest-centres").prop("checked"))
     {
         for (var idx in model["safehouses"])
         {
@@ -111,7 +120,7 @@ socket.on("updateModel", function(model)
                     layer: true, fillStyle: "rgba(5, 178, 14, 0.5)",
                     x: scaleX(model["safehouses"][idx]["location"]["_Location__longitude"]),
                     y: scaleY(model["safehouses"][idx]["location"]["_Location__latitude"]),
-                    width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [SAFEZONES_LAYER]
+                    width: BUILDING_SIZE, height: BUILDING_SIZE, groups: [REST_CENTRES_LAYER]
                 });
         }
     }
@@ -195,14 +204,72 @@ socket.on("updateModel", function(model)
     }
 
     updateResourceBars(model);
-});
-
-
-$(document).ready(function() {
+    
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+});
+
+function displayTasks(container, tasks){
+    container.empty();
     
+    container.append(
+        createTaskView("overview", "Overview", true, null, [])
+    );
+    
+    for(var task in tasks){
+        container.append("<hr/>");
+        var task_obj = tasks[task];
+        var task_id = parseInt(task) + 1;
+     
+        var task_view = createTaskView(task_id["UID"], "Task " + task_id, false,
+                                       task_obj["percentComplete"],
+                                       task_obj["resources"]
+        );
+        
+        container.append(task_view);
+        
+    }
+}
+
+function createTaskView(uid, name, active, completion, resources){
+    var task_view = $('<div id="#' + uid + '"><div class="arrow"></div></div>');
+    task_view.append("<h1>" + name + "</h1>");
+    
+    if(active){
+        task_view.addClass("active");
+    }
+    
+    var resources_view = $("<div class='resources'></div>");
+    var boats = 0;
+    var paramedics = 0;
+    var firefighters = 0;
+    for(var i = 0; i < resources.length; i++){
+        var resource = resources[i];
+        if(resource["capacity"] != null){
+            boats++;
+        }else{
+            paramedics++;
+        }
+        //console.log(resource);
+    }
+    resources_view.append(getResourceLabel("Boats", "ship", boats));
+    resources_view.append(getResourceLabel("Paramedics", "medkit", paramedics));
+    resources_view.append(getResourceLabel("Firefighters", "fire-extinguisher", firefighters));
+    task_view.append(resources_view);
+    
+    return task_view;
+}
+
+function getResourceLabel(name, icon, count){
+    var label = '<span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="{0}"><i class="fas fa-{1}"></i> {2}</span>';
+    label = label.replace("{0}", name).replace("{1}", icon).replace("{2}", count);
+    return $(label);
+}
+
+
+
+$(document).ready(function() {
     $("#checkbox-flood-area").change(function()
     {
         setLayerVisibility(FLOOD_LAYER, this.checked);
@@ -213,9 +280,9 @@ $(document).ready(function() {
         setLayerVisibility(BUILDINGS_LAYER, this.checked);
     });
 
-    $("#checkbox-safe-zones").change(function()
+    $("#checkbox-rest-centres").change(function()
     {
-        setLayerVisibility(SAFEZONES_LAYER, this.checked);
+        setLayerVisibility(REST_CENTRES_LAYER, this.checked);
     });
 
     $("#checkbox-resources").change(function()
@@ -246,24 +313,8 @@ $("#beforeImage").on('load', function(){
     $("canvas#main").drawLayers();
 });
 
-
-function showBeforeImage()
-{
-    $("#beforeImage").show();
-    $("#afterImage").hide();
-    $("#mapImage").hide();
-}
-
-function showAfterImage()
-{
-    $("#beforeImage").hide();
-    $("#afterImage").show();
-    $("#mapImage").hide();
-}
-
-function showMapImage()
-{
-    $("#beforeImage").hide();
-    $("#afterImage").hide();
-    $("#mapImage").show();
+function showMap(type){
+    var map = $("#" + type + "Image")
+    map.show();
+    map.siblings('img').hide();
 }

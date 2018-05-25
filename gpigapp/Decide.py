@@ -1,4 +1,5 @@
 from gpigapp import Model as modelLib
+import uuid
 
 def decide(Model):
     safeHouses = [safehouse for safehouse in Model.buildings if isinstance(safehouse, modelLib.Safehouse)]
@@ -7,6 +8,9 @@ def decide(Model):
     #Adding any unserviced buildings to the building priority list with their calculated priority
     for building in affectedBuildings:
         if(not any(building in subList for subList in Model.buildingPriorityList)):
+            if building.estimatedOccupants == 0 and len(building.affectedOccupants) == 0:
+                Model.buildings.remove(building)
+                
             priority = calcPriority(building, safeHouses)
             Model.buildingPriorityList.append((priority, building))
 
@@ -40,16 +44,16 @@ def decide(Model):
 def calcPriority(building, safehouses):
     priority = 0
 
-    if building.estimatedOccupants != 0:
-        priority += building.estimatedOccupants
-    else:
+    if building.estimatedOccupants == 0 and len(building.affectedOccupants) == 0:
         return 0
+
+    priority += building.estimatedOccupants
     
     for occupant in building.affectedOccupants:
         priority += occupant.priority
     
     priority += 1*getClosestSafehouse(building, safehouses)[1]
-    
+
     return priority
 
 ##
@@ -90,7 +94,7 @@ def createTask(building, resources, closestSafehouse):
         else:
             return None
 
-    return modelLib.Task(assignedResources, [building, closestSafehouse])
+    return modelLib.Task(str(uuid.uuid4()), assignedResources, [building, closestSafehouse])
 
 
 
