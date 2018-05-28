@@ -64,7 +64,8 @@ def calcPriority(building, safehouses):
 def getClosestSafehouse(building, safehouses):
     locBuild = building.location.get()
     minDist = -1
-    for safehouse in safehouses:
+    safehouseWithSpace = [safehouse for safehouse in safehouses if safehouse.capacity > building.estimatedOccupants]
+    for safehouse in safehouseWithSpace:
         locSafe = safehouse.location.get()
         dist = ((locBuild[0] - locSafe[0])**2 + (locBuild[1] - locSafe[1])**2)**0.5
         if(dist < minDist or minDist == -1):
