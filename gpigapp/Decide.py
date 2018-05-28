@@ -94,7 +94,7 @@ def createTask(building, resources, closestSafehouse):
         else:
             return None
 
-    return modelLib.Task(str(uuid.uuid4()), assignedResources, [building, closestSafehouse])
+    return modelLib.Task(str(uuid.uuid4()), assignedResources, [building, closestSafehouse], building.estimatedOccupants)
 
 
 

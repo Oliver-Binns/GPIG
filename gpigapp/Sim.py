@@ -51,8 +51,13 @@ class Sim():
                             resource.location.set(current[0], current[1]) # update resource object location
                 # update destination if all resources in task are there
                 if(all(not res.moving for res in task.resources)): 
-                    if(isinstance(task.destinations[0], modelLib.AffectedBuilding)):
+                    if(isinstance(task.destinations[0], modelLib.AffectedBuilding)): #if destination is affected building
                         model.buildings.remove(task.destinations[0])
+
+                    elif(isinstance(task.destinations[0], modelLib.Safehouse)):
+                        task.destinations[0].capacity -= task.expectedPeople # update rest centre capacity
+                        print(task.destinations[0].capacity)
+
                     task.destinations.pop(0)
                     self.customPrint("newDest")
 
