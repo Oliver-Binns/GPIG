@@ -77,8 +77,9 @@ class Model:
 		return FrontModel(self)
 
 class Task:
-	def __init__(self, uuid, resources, destinations, expectedPeople):
+	def __init__(self, uuid, name, resources, destinations, expectedPeople):
 		self.ID = uuid
+		self.name = name
 		self.resources = resources
 		self.destinations = destinations # List of destinations for the task
 		self.expectedPeople = expectedPeople

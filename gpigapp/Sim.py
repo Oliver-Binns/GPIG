@@ -56,7 +56,6 @@ class Sim():
 
                     elif(isinstance(task.destinations[0], modelLib.Safehouse)):
                         task.destinations[0].capacity -= task.expectedPeople # update rest centre capacity
-                        print(task.destinations[0].capacity)
 
                     task.destinations.pop(0)
                     self.customPrint("newDest")

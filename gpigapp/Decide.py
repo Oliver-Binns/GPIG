@@ -1,5 +1,6 @@
 from gpigapp import Model as modelLib
 import uuid
+import random
 
 def decide(Model):
     safeHouses = [safehouse for safehouse in Model.buildings if isinstance(safehouse, modelLib.Safehouse)]
@@ -94,10 +95,23 @@ def createTask(building, resources, closestSafehouse):
         else:
             return None
 
-    return modelLib.Task(str(uuid.uuid4()), assignedResources, [building, closestSafehouse], building.estimatedOccupants)
+    return modelLib.Task(str(uuid.uuid4()), generateName(), assignedResources, [building, closestSafehouse], building.estimatedOccupants)
 
+def generateName():
+    taskNouns = ["Apple", "Apricot", "Avocado", "Avocado", "Banana", "Bilberry", "Blackberry", "Blackcurrant", "Blood orange", 
+    "Blueberry", "Boysenberry", "Buddha's hand", "Cantaloupe", "Cherimoya", "Cherry", "Chico fruit", "Chili pepper", 
+    "Clementine", "Cloudberry", "Coconut", "Corn kernel", "Crab apples", "Cranberry", "Cucumber", "Cucumber", "Currant",
+    "Custard apple", "Damson", "Date", "Dragonfruit", "Durian", "Eggplant", "Elderberry", "Feijoa", "Fig", "Goji berry",
+    "Gooseberry", "Grape", "Grapefruit", "Guava", "Honeyberry", "Honeydew", "Huckleberry", "Jabuticaba", "Jackfruit",
+    "Jambul", "Jujube", "Juniper berry", "Kiwano", "Kiwifruit", "Kumquat", "Lemon", "Lime", "Longan", "Loquat",
+    "Lychee", "Mandarine", "Mango", "Mangosteen", "Marionberry", "Melon", "Miracle fruit", "Mulberry", "Nance",
+    "Nectarine", "Olive", "Olive", "Orange", "Papaya", "Passionfruit", "Pea", "Peach", "Pear", "Persimmon", 
+    "Pineapple", "Plantain", "Plum", "Plumcot", "Pomegranate", "Pomelo", "Prune", "Pumpkin", "Purple mangosteen",
+    "Quince", "Raisin", "Rambutan", "Raspberry", "Redcurrant", "Salak", "Salal berry", "Salmonberry", "Satsuma",
+    "Soursop", "Squash", "Star fruit", "Strawberry", "Tamarillo", "Tamarind", "Tangerine", "Tomato", "Ugli fruit",
+    "Watermelon", "Yuzu",]
 
-
+    return "Task "+random.choice(taskNouns)+"-"+random.choice(taskNouns)
 
 
 
