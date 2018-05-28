@@ -62,12 +62,18 @@ class Sim():
                         
             # Remove the finished tasks          
             if(len(tasksToRemove)>0):
-                for task in tasksToRemove:
-                    resToReallocate = task.resources
-                    model.resources+=resToReallocate #add resources to resources list
-                    model.assignedResources = [x for x in model.assignedResources if x not in resToReallocate]
-                    model.tasks.remove(task) #remove task
+                self.removeTasks(model, tasksToRemove)
          
         def customPrint(self, printVal):
             if(self.printDebugInfo):
                 print(printVal)
+
+        def removeTask(self, model, task):
+            resToReallocate = task.resources
+            model.resources+=resToReallocate #add resources to resources list
+            model.assignedResources = [x for x in model.assignedResources if x not in resToReallocate]
+            model.tasks.remove(task) #remove task
+
+        def removeTasks(self, model, tasks):
+            for task in tasks:
+                self.removeTask(model, task)

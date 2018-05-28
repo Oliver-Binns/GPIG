@@ -82,9 +82,8 @@ class Task:
 		self.resources = resources
 		self.destinations = destinations # List of destinations for the task
 		self.percentComplete = 0
+		self.active = False
 
-	def calculatePriority():
-		pass
 
 class Resource:
 	def __init__(self, location):

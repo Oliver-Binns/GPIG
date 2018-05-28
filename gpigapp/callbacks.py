@@ -50,12 +50,12 @@ def stepSim():
 
 @socketio.on("acceptTask")
 def acceptTask(uid):
-    pass
+    ooda.acceptTask(uid)
 
 @socketio.on("rejectTask")
 def rejectTask(uid):
-    pass
+    ooda.rejectTask(uid)
 
 @socketio.on("changeSpeed")
 def changespeed(speed):
-    pass
+    ooda.changeSimAgentSpeed(speed)

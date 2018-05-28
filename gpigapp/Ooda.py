@@ -41,3 +41,14 @@ class Ooda():
     def stepSim(self):
         self.sim.simStep(self.model)# update sim/model
         return self.model.getFrontendModel()
+
+    def acceptTask(self, uid):
+        taskToAccept = next(task for tasks in self.model.tasks if task.ID == uid)
+        taskToAccept.active = True
+
+    def rejectTask(self,uid):
+        taskToRemove = next(task for tasks in self.model.tasks if task.ID == uid)
+        self.sim.removeTask(self.model, taskToRemove)
+
+    def changeSimAgentSpeed(self, speed):
+        self.sim.agentspeed = speed
