@@ -106,12 +106,6 @@ nav ul li:active
 #tasks>div h1{
     margin-bottom: 0;
 }
-#tasks>div .resources{
-    display:none;
-}
-#tasks>div.active .resources{
-    display:block;
-}
 #tasks>hr{
     margin:0;
 }

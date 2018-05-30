@@ -103,9 +103,13 @@ socket.on("updateModel", function(model)
     var task_container = $("#tasks");
     if(task_container.children().length == 0){
         //Container is empty- create elements
+        task_container.append(
+            createTaskView("overview", "Overview", true, null, [])
+        );
         displayTasks(task_container, model["tasks"]);
     }else{
         //Container is NOT empty, update
+        updateTasks(task_container, model["tasks"]);
     }
    
 
@@ -226,25 +230,38 @@ socket.on("updateModel", function(model)
 });
 
 function displayTasks(container, tasks){
-    container.empty();
-    
-    container.append(
-        createTaskView("overview", "Overview", true, null, [])
-    );
-    
-    for(var task in tasks){
+    for(task of tasks){
         container.append("<hr/>");
-        var task_obj = tasks[task];
-        var task_id = parseInt(task) + 1;
-     
-        var task_view = createTaskView(task_id["UID"], "Task " + task_id, false,
-                                       task_obj["percentComplete"],
-                                       task_obj["resources"]
+        var task_view = createTaskView(task["ID"], task["name"], false,
+                                       task["percentComplete"],
+                                       task["resources"]
         );
         
         container.append(task_view);
         
     }
+}
+
+function updateTasks(container, tasks){
+    var task_views = container.children("div");
+    var overview_view = [].shift.call(task_views);
+    
+    task_views.each(function(){
+        for(i = 0; i < tasks.length; i++){
+            var task = tasks[i];
+            
+            var task_id = "#" + task["ID"];
+            if(task_id == this.id){
+                tasks.splice(i, 1);
+                i--;
+                return;
+            }
+        }
+        this.previousSibling.remove();
+        this.remove();
+    });
+    
+    displayTasks(container, tasks);
 }
 
 function createTaskView(uid, name, active, completion, resources){
