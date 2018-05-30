@@ -250,7 +250,7 @@ function updateTasks(container, tasks){
         for(i = 0; i < tasks.length; i++){
             var task = tasks[i];
             
-            var task_id = "#" + task["ID"];
+            var task_id = task["ID"];
             if(task_id == this.id){
                 tasks.splice(i, 1);
                 i--;
@@ -265,14 +265,21 @@ function updateTasks(container, tasks){
 }
 
 function createTaskView(uid, name, active, completion, resources){
-    var task_view = $('<div id="#' + uid + '"><div class="arrow"></div></div>');
+    var task_view = $('<div id="' + uid + '"><div class="arrow"></div></div>');
     task_view.append("<h1>" + name + "</h1>");
     
     if(active){
         task_view.addClass("active");
     }
+
+    //Status
+    if(uid != "overview"){
+        var status_view = $("<div class='status'><span>Status: <a class='pending' onclick='beginAcceptTask(this);'>Pending</a></span></div>");
+        task_view.append(status_view);
+    }
     
-    var resources_view = $("<div class='resources'></div>");
+    //Resources View
+    var resources_view = $("<div class='resources'><span>Resources: </span></div>");
     var boats = 0;
     var paramedics = 0;
     var firefighters = 0;
@@ -283,7 +290,6 @@ function createTaskView(uid, name, active, completion, resources){
         }else{
             paramedics++;
         }
-        //console.log(resource);
     }
     resources_view.append(getResourceLabel("Boats", "ship", boats));
     resources_view.append(getResourceLabel("Paramedics", "medkit", paramedics));
@@ -297,6 +303,14 @@ function getResourceLabel(name, icon, count){
     var label = '<span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="{0}"><i class="fas fa-{1}"></i> {2}</span>';
     label = label.replace("{0}", name).replace("{1}", icon).replace("{2}", count);
     return $(label);
+}
+
+function beginAcceptTask(link){
+    var id = link.parentElement.parentElement.parentElement.id;
+    link.classList.remove("pending");
+    link.classList.add("in-progress");
+    link.innerHTML = "Accepted";
+    acceptTask(id);
 }
 
 function acceptTask(uid)

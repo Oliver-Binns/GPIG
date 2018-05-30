@@ -84,9 +84,26 @@ nav ul li:active
     margin-top:15px;
     margin-bottom:15px;
 }
+#overview{
+    background-color:#222;
+    color:whitesmoke;
+}
+#tasks>div#overview .arrow{
+    border-right-color: #222;
+}
 #tasks>div{
     position:relative;
     padding:20px;
+}
+#tasks .status a.rejected{
+    color:red;
+}
+#tasks .status a.pending{
+    color:orange;
+}
+#tasks .status a.accepted,
+#tasks .status a.in-progress{
+    color:green;
 }
 #tasks>div .arrow{
     position:absolute;
@@ -104,6 +121,7 @@ nav ul li:active
     display:block;
 }
 #tasks>div h1{
+    font-size:140%;
     margin-bottom: 0;
 }
 #tasks>hr{

@@ -43,7 +43,7 @@ class Ooda():
         return self.model.getFrontendModel()
 
     def acceptTask(self, uid):
-        taskToAccept = next(task for tasks in self.model.tasks if task.ID == uid)
+        taskToAccept = next(task for task in self.model.tasks if task.ID == uid)
         taskToAccept.active = True
 
     def rejectTask(self,uid):
