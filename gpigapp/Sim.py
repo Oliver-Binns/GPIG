@@ -20,6 +20,8 @@ class Sim():
             tasksToRemove = []
 
             for task in model.tasks:
+                if task.active == False:
+                    return
                 for resource in task.resources:
                     self.customPrint("current %s, dest %s" %(resource.location.get(),task.destinations[0].location.get()))
 
