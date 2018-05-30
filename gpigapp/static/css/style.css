@@ -99,14 +99,14 @@ nav ul li:active
     position:relative;
     padding:20px;
 }
-#tasks .status a.rejected{
+#tasks .status span.rejected{
     color:red;
 }
-#tasks .status a.pending{
+#tasks .status span.pending{
     color:orange;
 }
-#tasks .status a.accepted,
-#tasks .status a.in-progress{
+#tasks .status span.accepted,
+#tasks .status span.in-progress{
     color:green;
 }
 #tasks>div .arrow{

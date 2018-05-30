@@ -274,7 +274,11 @@ function createTaskView(uid, name, active, completion, resources){
 
     //Status
     if(uid != "overview"){
-        var status_view = $("<div class='status'><span>Status: <a class='pending' onclick='beginAcceptTask(this);'>Pending</a></span></div>");
+        var status_view = $("<div class='status'>Status: </div>");
+        var span = $("<span class='pending'>Pending</span>")
+        span.append('<button onclick="beginAcceptTask(this);" type="button" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Accept</button>');
+        span.append('<button onclick="beginRejectTask(this);" type="button" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>');
+        status_view.append(span);
         task_view.append(status_view);
     }
     
@@ -305,12 +309,23 @@ function getResourceLabel(name, icon, count){
     return $(label);
 }
 
-function beginAcceptTask(link){
-    var id = link.parentElement.parentElement.parentElement.id;
-    link.classList.remove("pending");
-    link.classList.add("in-progress");
-    link.innerHTML = "Accepted";
+function setStatus(task_id, status){
+    var statusSpan = $("#" + task_id + " .status span"); 
+    statusSpan.removeClass();
+    statusSpan.addClass(status.toLowerCase());
+    statusSpan.html(status);
+}
+
+function beginAcceptTask(button){
+    var id = button.parentElement.parentElement.parentElement.id;
+    setStatus(id, "Accepted");
     acceptTask(id);
+}
+
+function beginRejectTask(button){
+    var id = button.parentElement.parentElement.parentElement.id;
+    setStatus(id, "Rejected");
+    rejectTask(id);
 }
 
 function acceptTask(uid)

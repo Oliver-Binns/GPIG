@@ -47,7 +47,7 @@ class Ooda():
         taskToAccept.active = True
 
     def rejectTask(self,uid):
-        taskToRemove = next(task for tasks in self.model.tasks if task.ID == uid)
+        taskToRemove = next(task for task in self.model.tasks if task.ID == uid)
         self.sim.removeTask(self.model, taskToRemove)
 
     def changeSimAgentSpeed(self, speed):
