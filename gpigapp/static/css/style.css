@@ -66,13 +66,17 @@ nav ul li:active
 
 .side-bar
 {
-    background-color:whitesmoke;
-    border-left: 1px solid rgba(0,0,0,.1);
     height: 100%;
-    width: 400px;
-    float: right;
+    width: 436px;
+    right:0;
     z-index:5;
-    position:relative;
+    position:absolute;
+    overflow-y:auto;
+    padding-left:36px;
+}
+.side-bar>div{
+    background-color:whitesmoke;
+    border-left: 1px solid white;
 }
 
 .side-bar>div.overview{
