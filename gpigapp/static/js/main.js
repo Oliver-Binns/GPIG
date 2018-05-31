@@ -276,8 +276,8 @@ function createTaskView(uid, name, active, completion, resources){
     if(uid != "overview"){
         var status_view = $("<div class='status'>Status: </div>");
         var span = $("<span class='pending'>Pending</span>")
-        span.append('<button onclick="beginAcceptTask(this);" type="button" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Accept</button>');
-        span.append('<button onclick="beginRejectTask(this);" type="button" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>');
+        span.append(' <button onclick="beginAcceptTask(this);" type="button" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Accept</button>');
+        span.append(' <button onclick="beginRejectTask(this);" type="button" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>');
         status_view.append(span);
         task_view.append(status_view);
     }
@@ -309,23 +309,51 @@ function getResourceLabel(name, icon, count){
     return $(label);
 }
 
-function setStatus(task_id, status){
+function setStatus(task_id, status, class_name){
     var statusSpan = $("#" + task_id + " .status span"); 
     statusSpan.removeClass();
-    statusSpan.addClass(status.toLowerCase());
+    statusSpan.addClass(class_name.toLowerCase());
     statusSpan.html(status);
 }
 
 function beginAcceptTask(button){
     var id = button.parentElement.parentElement.parentElement.id;
-    setStatus(id, "Accepted");
-    acceptTask(id);
+    
+    var count = 5;
+
+    var timer;
+    timer = setInterval(function(){
+        console.log(count);
+        if(count > 0){
+            var text = "Accepted, starting in " + count + "."
+            count--;
+            setStatus(id, text, "accepted");
+        }else{
+            acceptTask(id);
+            setStatus(id, "In Progress", "in-progress");
+            clearInterval(timer);
+        }
+    }, 1000, id, count, timer);
 }
 
 function beginRejectTask(button){
     var id = button.parentElement.parentElement.parentElement.id;
-    setStatus(id, "Rejected");
-    rejectTask(id);
+    
+    var count = 5;
+
+    var timer;
+    timer = setInterval(function(){
+        console.log(count);
+        if(count > 0){
+            var text = "Rejected, cancelling in " + count + "."
+            count--;
+            setStatus(id, text, "rejected");
+        }else{
+            rejectTask(id);
+            setStatus(id, "Rejected", "rejected");
+            clearInterval(timer);
+        }
+    }, 1000, id, count, timer);
 }
 
 function acceptTask(uid)
