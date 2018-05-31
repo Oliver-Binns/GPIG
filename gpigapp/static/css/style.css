@@ -99,6 +99,7 @@ nav ul li:active
     position:relative;
     padding:20px;
 }
+#tasks .status span.rejecting,
 #tasks .status span.rejected{
     color:red;
 }

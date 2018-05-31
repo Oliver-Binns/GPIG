@@ -103,9 +103,7 @@ socket.on("updateModel", function(model)
     var task_container = $("#tasks");
     if(task_container.children().length == 0){
         //Container is empty- create elements
-        task_container.append(
-            createTaskView("overview", "Overview", true, null, [])
-        );
+        createTaskView(task_container, "overview", "Overview", true, null, [])
         displayTasks(task_container, model["tasks"]);
     }else{
         //Container is NOT empty, update
@@ -232,13 +230,10 @@ socket.on("updateModel", function(model)
 function displayTasks(container, tasks){
     for(task of tasks){
         container.append("<hr/>");
-        var task_view = createTaskView(task["ID"], task["name"], false,
-                                       task["percentComplete"],
-                                       task["resources"]
+        createTaskView(container,
+            task["ID"], task["name"], false,
+            task["percentComplete"], task["resources"]
         );
-        
-        container.append(task_view);
-        
     }
 }
 
@@ -264,7 +259,7 @@ function updateTasks(container, tasks){
     displayTasks(container, tasks);
 }
 
-function createTaskView(uid, name, active, completion, resources){
+function createTaskView(container, uid, name, active, completion, resources){
     var task_view = $('<div id="' + uid + '"><div class="arrow"></div></div>');
     task_view.append("<h1>" + name + "</h1>");
     
@@ -274,12 +269,7 @@ function createTaskView(uid, name, active, completion, resources){
 
     //Status
     if(uid != "overview"){
-        var status_view = $("<div class='status'>Status: </div>");
-        var span = $("<span class='pending'>Pending</span>")
-        span.append(' <button onclick="beginAcceptTask(this);" type="button" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Accept</button>');
-        span.append(' <button onclick="beginRejectTask(this);" type="button" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>');
-        status_view.append(span);
-        task_view.append(status_view);
+        task_view.append($("<div class='status'>Status: <span></span></div>"));
     }
     
     //Resources View
@@ -300,7 +290,8 @@ function createTaskView(uid, name, active, completion, resources){
     resources_view.append(getResourceLabel("Firefighters", "fire-extinguisher", firefighters));
     task_view.append(resources_view);
     
-    return task_view;
+    container.append(task_view);
+    setStatus(uid, "Pending", "pending");
 }
 
 function getResourceLabel(name, icon, count){
@@ -309,25 +300,40 @@ function getResourceLabel(name, icon, count){
     return $(label);
 }
 
-function setStatus(task_id, status, class_name){
+function setStatus(task_id, status, class_name, f){
     var statusSpan = $("#" + task_id + " .status span"); 
+
     statusSpan.removeClass();
     statusSpan.addClass(class_name.toLowerCase());
+
+    statusSpan.nextAll("button").remove();
+    if(class_name == "pending"){
+        statusSpan.after(' <button onclick="beginAcceptTask(this);" type="button" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Accept</button>');
+        statusSpan.after(' <button onclick="beginRejectTask(this);" type="button" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>');
+    }else if (class_name === "accepted" || class_name === "rejecting"){
+        button = $('<button type="button" class="btn btn-sm btn-info"><i class="fas fa-undo"></i> Undo</button>');
+        button.click(f);
+        statusSpan.after(button);
+        statusSpan.after(' ');
+    }
+
     statusSpan.html(status);
 }
 
 function beginAcceptTask(button){
-    var id = button.parentElement.parentElement.parentElement.id;
+    var id = button.parentElement.parentElement.id;
     
     var count = 5;
 
     var timer;
     timer = setInterval(function(){
-        console.log(count);
         if(count > 0){
             var text = "Accepted, starting in " + count + "."
             count--;
-            setStatus(id, text, "accepted");
+            setStatus(id, text, "accepted", function(){
+                clearInterval(timer);
+                setStatus(id, "Pending", "pending");
+            });
         }else{
             acceptTask(id);
             setStatus(id, "In Progress", "in-progress");
@@ -337,17 +343,19 @@ function beginAcceptTask(button){
 }
 
 function beginRejectTask(button){
-    var id = button.parentElement.parentElement.parentElement.id;
+    var id = button.parentElement.parentElement.id;
     
     var count = 5;
 
     var timer;
     timer = setInterval(function(){
-        console.log(count);
         if(count > 0){
-            var text = "Rejected, cancelling in " + count + "."
+            var text = "Rejecting in " + count + "."
             count--;
-            setStatus(id, text, "rejected");
+            setStatus(id, text, "rejecting", function(){
+                clearInterval(timer);
+                setStatus(id, "Pending", "pending");
+            });
         }else{
             rejectTask(id);
             setStatus(id, "Rejected", "rejected");
