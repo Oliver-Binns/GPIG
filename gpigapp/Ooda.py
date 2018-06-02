@@ -7,16 +7,25 @@ import time
 
 class Ooda():
     def __init__(self):
-        self.model = modelLib.Model.loadFakeModel()
+        self.model, self.additional = modelLib.Model.loadFakeModel()
         self.loop = False
         self.sim = simLib.Sim()
 
     def observe(self):
 
-        if self.model.buildings.count<5:
+        if len(self.model.buildings) < 5:
             # Fetch new data
+            
+            # Call additional.getMoreData(samples) where samples is the number of data 
+            # points you want to add. Can be 0. You could do a random here so it looks more
+            # dynamic. It returns None when no more builidngs left or when called with 0.
+
+            buildings, persons = self.additional.getMoreData(2)
+
             # Add new data if not None
-        pass
+            if buildings != None:
+                self.model.buildings += buildings
+                self.model.affectedPersons += persons
 
     def orient(self):
         pass

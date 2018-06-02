@@ -7,6 +7,24 @@ buildingsPath = "data/mock_db/affectedBuildings.csv"
 safeHousesPath = "data/mock_db/safeHouses.csv"
 peoplePath = "data/mock_db/people.csv"
 
+class additionalData():
+    def __init__(self, buildings):
+        self.buildings = buildings
+
+    def getMoreData(self, samplePoints):
+
+        if samplePoints == 0 or len(self.buildings) == 0:
+            return None, None
+
+        buildings = []
+        for i in range(samplePoints):
+            if len(self.buildings) > 0:
+                buildings.append(self.buildings.pop())
+        
+        persons = getAffectedPersonsFromBuildings(buildings)
+
+        return buildings, persons
+
 def getResources():
     """
     Returns a list of resources.
@@ -113,10 +131,20 @@ def getAffectedPersons():
 
     return affected
 
+def getAffectedPersonsFromBuildings(buildings):
+    affected = []
+    for building in buildings:
+        if building.affectedOccupants != None:
+            for person in building.affectedOccupants:
+                affected.append(person)
+    return affected
+
 def getPopulatedModel():
     tasks = []
     resources = getResources()
-    affectedPersons = getAffectedPersons()
-    buildings = getBuildings() + getSafeHouses() 
-
-    return Model.Model( tasks, resources, affectedPersons, buildings )
+    buildings = getBuildings()
+    additional = additionalData(buildings)
+    buildings = additional.getMoreData(10)[0] + getSafeHouses() 
+    affectedPersons = getAffectedPersonsFromBuildings(buildings)
+    
+    return Model.Model( tasks, resources, affectedPersons, buildings ), additional
