@@ -35,6 +35,9 @@ def loadAfterImage(img):
     else:
         print("TODO: store image on server, then update client with displayMapImage")
 
+@socketio.on("observe")
+def observe():
+    ooda.observe()
 
 @socketio.on("decide")
 def decide():
@@ -59,3 +62,7 @@ def rejectTask(uid):
 @socketio.on("changeSpeed")
 def changespeed(speed):
     ooda.changeSimAgentSpeed(speed)
+
+@socketio.on("resetSim")
+def resetSim():
+    ooda.resetSim()

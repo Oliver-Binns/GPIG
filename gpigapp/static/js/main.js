@@ -34,6 +34,7 @@ function setUIUpdateInterval(ms)
     clearInterval(updateLoop);
     updateLoop = window.setInterval(() => 
     {
+        socket.emit("observe")
         socket.emit("decide");
         socket.emit("stepSim");
     }, ms);
@@ -337,6 +338,12 @@ function acceptTask(uid)
 function rejectTask(uid)
 {
     socket.emit("rejectTask", uid);
+    //update UI?
+}
+
+function resetSim()
+{
+    socket.emit("resetSim");
     //update UI?
 }
 

@@ -12,7 +12,10 @@ class Ooda():
         self.sim = simLib.Sim()
 
     def observe(self):
-        # Fetch data
+
+        if self.model.buildings.count<5:
+            # Fetch new data
+            # Add new data if not None
         pass
 
     def orient(self):
@@ -52,3 +55,6 @@ class Ooda():
 
     def changeSimAgentSpeed(self, speed):
         self.sim.agentspeed = speed
+
+    def resetSim():
+        self.model = modelLib.Model.loadFakeModel()
