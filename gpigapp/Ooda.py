@@ -65,5 +65,5 @@ class Ooda():
     def changeSimAgentSpeed(self, speed):
         self.sim.agentspeed = speed
 
-    def resetSim():
-        self.model = modelLib.Model.loadFakeModel()
+    def resetSim(self):
+        self.__init__()
