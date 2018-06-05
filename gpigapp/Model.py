@@ -156,6 +156,7 @@ class Safehouse(Building):
 	def __init__(self, location, isImpacted, capacity):
 		super().__init__(location, isImpacted, 0, None)
 		self.capacity = capacity
+		self.maxCapacity = capacity
 
 	def getRemainingCapacity(self):
 		return self.capacity - self.estimatedOccupants		
