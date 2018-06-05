@@ -19,9 +19,9 @@
                 <div class="progress" style="height: 20px;">
                     <div class="progress-bar" id="paramedics" role="progressbar" style="width: 26.667%;" data-toggle="tooltip" data-placement="top" title="Paramedics"><i class="fas fa-medkit"></i></div>
                 </div>
-                <div class="progress" style="height: 20px;">
+                <!--div class="progress" style="height: 20px;">
                     <div class="progress-bar" id="firefighters" role="progressbar" style="width: 40%;" data-toggle="tooltip" data-placement="top" title="Firefighters"><i class="fas fa-fire-extinguisher"></i></div>
-                </div>
+                </div-->
                 
                 <div class="progress" style="height: 20px;">
                     <div class="progress-bar" id="rest-centres" role="progressbar" style="width: 35%;" data-toggle="tooltip" data-placement="top" title="Rest Centre Capacity"><i class="fas fa-warehouse"></i></div>
@@ -49,6 +49,14 @@
                         <input type="checkbox" id="checkbox-resources" checked="checked" class="regular-checkbox" />
                         <span class="checkmark"></span>Resources
                     </label>
+                </div>
+                <div class="playback-controls">
+                    <button type="button btn-sm" class="btn btn-warning" onclick="playPauseSim(this)">
+                        <i class="fas fa-pause-circle"></i>
+                    </button>
+                    <button type="button btn-sm" class="btn btn-warning" onclick="resetSim()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
                 </div>
                 <div class="select">
                     <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">

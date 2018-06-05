@@ -214,7 +214,13 @@ nav ul li:active
     transform: rotate(45deg);
 }
 
-
+#layers .playback-controls{
+    z-index:5;
+    position:absolute;
+    top:15px;
+    right:15px;
+    color:white;
+}
 #layers .select{
     z-index:5;
     position:absolute;

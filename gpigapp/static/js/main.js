@@ -77,7 +77,7 @@ function updateResourceBars(model)
 {
     $(".progress-bar#boats").css("width", model.assignedBoats+"%");
     $(".progress-bar#paramedics").css("width", model.assignedParamedics+"%");
-    $(".progress-bar#firefighters").css("width", model.assignedResponders+"%");
+    //$(".progress-bar#firefighters").css("width", model.assignedResponders+"%");
     $(".progress-bar#rest-centres").css("width", model.remainingRestCentreSpace+"%");
 }
 
@@ -277,7 +277,7 @@ function createTaskView(container, uid, name, active, completion, resources){
     var resources_view = $("<div class='resources'><span>Resources: </span></div>");
     var boats = 0;
     var paramedics = 0;
-    var firefighters = 0;
+    //var firefighters = 0;
     for(var i = 0; i < resources.length; i++){
         var resource = resources[i];
         if(resource["capacity"] != null){
@@ -288,7 +288,7 @@ function createTaskView(container, uid, name, active, completion, resources){
     }
     resources_view.append(getResourceLabel("Boats", "ship", boats));
     resources_view.append(getResourceLabel("Paramedics", "medkit", paramedics));
-    resources_view.append(getResourceLabel("Firefighters", "fire-extinguisher", firefighters));
+    //resources_view.append(getResourceLabel("Firefighters", "fire-extinguisher", firefighters));
     task_view.append(resources_view);
     
     container.append(task_view);
@@ -375,6 +375,19 @@ function rejectTask(uid)
 {
     socket.emit("rejectTask", uid);
     //update UI?
+}
+
+function playPauseSim(button){
+    var icon = button.children[0];
+    if(icon.classList.contains("fa-pause-circle")){
+        setServerSpeed(0);
+        icon.classList.remove("fa-pause-circle");
+        icon.classList.add("fa-play-circle");
+    }else{
+        setServerSpeed(0.05);
+        icon.classList.remove("fa-play-circle");
+        icon.classList.add("fa-pause-circle");
+    }
 }
 
 function resetSim()
